@@ -35,7 +35,7 @@
     .card{
         background-color: rgba(1,44,123,0.8);
         border: solid 1px #7ecdf4;
-        $h:40px;
+        $h:50px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -50,8 +50,10 @@
             font-stretch: normal;
             letter-spacing: 1px;
             color: #fff;
-            line-height: 38px;
-            text-align: center;
+            line-height: 48px;
+            text-align: left;
+            font-weight: bold;
+            padding:0 54px;
         }
         .con{
             flex-grow: 1;

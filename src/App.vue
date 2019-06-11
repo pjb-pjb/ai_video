@@ -1,36 +1,115 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+    <div id="app">
+        <div class="root-head">{{title}}</div>
+        <div class="main">
+            <router-view/>
+        </div>
+        <div class="root-foot">
+            <ul>
+                <li @click="jump(item,index)" :class="{active:activeIndex==index}" :style="'width:'+100/footList.length+'%;'" v-for="(item,index) in footList" v-bind:key="index">{{item.title}}</li>
+            </ul>
+        </div>
+    </div>
 </template>
 
 <script>
-export default {
-  name: 'App',
-    methods:{
-    },
-    mounted(){
-      this.$store.state.isOpen = true;
+    export default {
+        name: 'App',
+        data() {
+            return {
+                footList: [
+                    {
+                        path: "/",
+                        title: "全面监控"
+                    },
+                    {
+                        path: "/znxs",
+                        title: "智能巡视"
+                    },
+                    {
+                        path: "/znld",
+                        title: "智能联动"
+                    }
+                ],
+                activeIndex: 0,
+                title:"全面监控"
+            }
+        },
+        methods: {
+            jump(item,index){
+                this.activeIndex = index;
+                this.title = item.title;
+                this.$router.push(item.path+"?n="+index);
+            }
+        },
+        mounted() {
+            this.activeIndex = this.$route.query.n?this.$route.query.n:0;
+        }
     }
-}
 </script>
 
 <style lang="scss">
-*{
-	margin: 0;
-	padding: 0;
-  font-family: "MicrosoftYaHei";
-  box-sizing: border-box;
-}
-ul,li{
-	list-style: none;
-}
-a{
-	text-decoration: none;
-}
-b,i,em,strong,h1,h2,h3,h4,h5,h6{
-	font-style: normal;
-	font-weight: normal;
-}
+    @import "./css/commom.scss";
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: "MicrosoftYaHei";
+        box-sizing: border-box;
+    }
 
+    ul, li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    b, i, em, strong, h1, h2, h3, h4, h5, h6 {
+        font-style: normal;
+        font-weight: normal;
+    }
+
+    #app {
+        width: 100vw;
+        height: 100vh;
+        padding: 0 20px;
+        background-image: url("./assets/bj.png");
+        background-size: 100%;
+        /*@extend .el-dialog;*/
+    }
+    .main{
+        width: 100%;
+        height: calc(100% - 150px);
+    }
+    .root-foot {
+        height: 60px;
+        ul {
+            height: 100%;
+            display: flex;
+            li {
+                height: 100%;
+                background: #1d193a;
+                border: 1px solid #7ecdf4;
+                border-bottom-left-radius: 20px;
+                border-bottom-right-radius: 20px;
+                color: #fff;
+                text-align: center;
+                line-height: 60px;
+                font-size: 24px;
+                cursor: pointer;
+                &.active{
+                    background: #0d371d;
+                }
+            }
+        }
+
+    }
+    .root-head{
+        height: 90px;
+        text-align: center;
+        line-height: 90px;
+        color: #fff;
+        font-size: 36px;
+    }
 </style>

@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import NotFound from '@/components/notFound';
 import Index from '@/components/index';
+import Znxs from '@/components/znxs';
+import Znld from '@/components/znld';
 
 
 //引入base64
@@ -17,8 +19,16 @@ var router = new Router({
             component: Index,
         },
         {
-            path:"*",
-            component:NotFound
+            path: "/znxs",
+            component: Znxs
+        },
+        {
+            path: "/znld",
+            component: Znld
+        },
+        {
+            path: "*",
+            component: NotFound
         }
     ]
 });

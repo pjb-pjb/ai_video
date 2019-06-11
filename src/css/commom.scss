@@ -1,0 +1,138 @@
+//单行文本溢出
+.ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+//修改element-ui table 的样式
+$color:#fff;
+$font-size:16px;
+.reset-table{
+  .el-table {
+    table {
+      tr {
+        div.myActive {
+          background-color: #409eff !important;
+        }
+        td {
+          background-color: transparent !important;
+        }
+        background-color: #012c7b;
+        border: solid 1px #7ecdf4;
+        &.hover-row {
+          > td {
+            background: #012cbb !important;
+            color:$color;
+          }
+        }
+        td{
+          color:$color;
+        }
+        th {
+          background-color: #012c7b;
+          border: solid 1px #7ecdf4;
+          color: $color;
+          font-weight: 500;
+        }
+      }
+
+    }
+    background: transparent !important;
+  }
+  .el-col{
+    padding: 0 2px;
+  }
+}
+//修改分页样式
+.reset-page{
+  $lg-font-size:$font-size+8px;
+  $active-color:rgba(66, 189, 255, 1);
+  $bg:transparent;
+  .el-pager{
+    li{
+      background: $bg;
+      color: $color;
+      font-size: $font-size;
+      transition: all 0.3s;
+      &.active{
+        font-size: $lg-font-size;
+        color: $active-color;
+      }
+      &:hover{
+        font-size: $lg-font-size;
+        color: $active-color;
+      }
+    }
+  }
+  .el-pagination {
+    .btn-next,.btn-prev{
+      background: $bg;
+      color: $color;
+      &:hover{
+          transition: all 0.3s;
+          color: $active-color;
+      }
+      .el-icon{
+        font-size: $font-size;
+      }
+    }
+    span{
+      color: $color;
+      font-size: $font-size;
+    }
+  }
+}
+//修改form
+.reset-form{
+  .el-form-item__label{
+    color: $color;
+    font-size: $font-size;
+  }
+}
+//修改dialog
+.el-dialog{
+  //background: red;
+}
+//修改复选框
+.el-checkbox{
+  color: #fff;
+  $size:16px;
+  .el-checkbox__label{
+    font-size: $size;
+  }
+  .el-checkbox__inner{
+    width: $size;
+    height: $size;
+  }
+}
+  //修改树
+.reset-tree{
+  .el-tree {
+    border-right: none;
+    background: transparent !important;
+    .el-tree-node__label {
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+    .el-tree-node__content {
+      height: 40px;
+      span{
+        @extend .ellipsis;
+      }
+    }
+    .el-tree-node__content:hover {
+      background: rgba(0, 0, 0, 0.2) !important;
+    }
+    .el-tree-node__content {
+      background: transparent !important;
+      /*padding: 0 20px !important;*/
+      box-sizing: border-box;
+      .el-tree-node__expand-icon {
+        font-size: 20px;
+      }
+    }
+  }
+}
