@@ -4,6 +4,7 @@ import NotFound from '@/components/notFound';
 import Index from '@/components/index';
 import Znxs from '@/components/znxs';
 import Znld from '@/components/znld';
+import Home from '@/components/home';
 
 
 //引入base64
@@ -17,6 +18,10 @@ var router = new Router({
         {
             path: "/",
             component: Index,
+        },
+        {
+            path: "/home",
+            component: Home,
         },
         {
             path: "/znxs",

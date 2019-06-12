@@ -1,0 +1,20 @@
+{
+	"cmdid": 104,
+	"time": "2017-02-02",
+	"ssdz": "47",
+	"ssdzname": "华北.福瑞站",
+	"list": [{
+		"msg": "当前风速：6.5    m/s。",
+		"devid": "",
+		"channelid": "",
+		"streamid": "0",
+		"alarmlevel": "02",
+		"alarmlevelname": "二级告警",
+		"alarmptype": "02",
+		"alarmptypename": "环境告警",
+		"alarmtype": "104",
+		"alarmtypename": "室外风速告警",
+		"sscz": "47",
+		"ssczname": "华北.福瑞站"
+	}]
+}

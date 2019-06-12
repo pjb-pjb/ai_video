@@ -1,14 +1,14 @@
 <template>
     <div id="app">
-        <div class="root-head">{{title}}</div>
-        <div class="main">
+        <!--<div class="root-head">{{title}}</div>-->
+        <!--<div class="main">-->
             <router-view/>
-        </div>
-        <div class="root-foot">
-            <ul>
-                <li @click="jump(item,index)" :class="{active:activeIndex==index}" :style="'width:'+100/footList.length+'%;'" v-for="(item,index) in footList" v-bind:key="index">{{item.title}}</li>
-            </ul>
-        </div>
+        <!--</div>-->
+        <!--<div class="root-foot">-->
+            <!--<ul>-->
+                <!--<li @click="jump(item,index)" :class="{active:activeIndex==index}" :style="'width:'+100/footList.length+'%;'" v-for="(item,index) in footList" v-bind:key="index">{{item.title}}</li>-->
+            <!--</ul>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -71,11 +71,11 @@
     }
 
     #app {
-        width: 100vw;
-        height: 100vh;
-        padding: 0 20px;
-        background-image: url("./assets/bj.png");
-        background-size: 100%;
+        /*width: 100vw;*/
+        /*height: 100vh;*/
+        /*padding: 0 20px;*/
+        /*background-image: url("./assets/bj.png");*/
+        /*background-size: 100%;*/
         /*@extend .el-dialog;*/
     }
     .main{
