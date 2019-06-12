@@ -163,11 +163,11 @@
             </card>
             <card width="936px" title="告警信息" height="100">
                 <ul class="list warn">
-                    <li v-for="(item,index) in work" v-bind:key="index">
+                    <li v-for="(item,index) in warn" v-bind:key="index">
                         <div class="name" :title="item.name">{{item.name}}</div>
                         <div class="time" :title="item.time">{{item.time}}</div>
-                        <div class="dev" :title="item.time">{{item.time}}</div>
-                        <div class="des" :title="item.des">{{item.des}}</div>
+                        <div class="dev" :title="item.time">{{item.des1}}</div>
+                        <div class="des" :title="item.des">{{item.des2}}</div>
                     </li>
                 </ul>
             </card>
@@ -229,6 +229,61 @@
                         name:"周界轮询",
                         time:"2019-05-06  15:20:10",
                         des:"围墙东北角球型摄像机-围墙西北角球型摄像机-变电站全景摄像机"
+                    }
+                ],warn:[
+                    {
+                        name:"安防系统",
+                        time:"2019-05-06  15:20:10",
+                        des1:"电子围栏",
+                        des2:"电子围栏一区（东一）入侵告警"
+                    },
+                    {
+                        name:"消防系统",
+                        time:"2019-05-06  15:20:10",
+                        des1:"3号感烟探头",
+                        des2:"生产综合楼1楼蓄电池室3号感烟探头报警"
+                    },
+                    {
+                        name:"视频监控",
+                        time:"2019-05-06  15:20:10",
+                        des1:"东北角摄像机",
+                        des2:"生产综合楼1楼35kV高压室东北角球型摄像机监测被异物遮挡"
+                    },
+                    {
+                        name:"安防系统",
+                        time:"2019-05-06  15:20:10",
+                        des1:"电子围栏",
+                        des2:"电子围栏一区（东一）入侵告警"
+                    },
+                    {
+                        name:"消防系统",
+                        time:"2019-05-06  15:20:10",
+                        des1:"3号感烟探头",
+                        des2:"生产综合楼1楼蓄电池室3号感烟探头报警"
+                    },
+                    {
+                        name:"视频监控",
+                        time:"2019-05-06  15:20:10",
+                        des1:"东北角摄像机",
+                        des2:"生产综合楼1楼35kV高压室东北角球型摄像机监测被异物遮挡"
+                    },
+                    {
+                        name:"安防系统",
+                        time:"2019-05-06  15:20:10",
+                        des1:"电子围栏",
+                        des2:"电子围栏一区（东一）入侵告警"
+                    },
+                    {
+                        name:"消防系统",
+                        time:"2019-05-06  15:20:10",
+                        des1:"3号感烟探头",
+                        des2:"生产综合楼1楼蓄电池室3号感烟探头报警"
+                    },
+                    {
+                        name:"视频监控",
+                        time:"2019-05-06  15:20:10",
+                        des1:"东北角摄像机",
+                        des2:"生产综合楼1楼35kV高压室东北角球型摄像机监测被异物遮挡"
                     }
                 ]
             }
@@ -352,7 +407,7 @@
             }
         }
         .warn{
-            color: #fe0000;
+            color: #ff0000;
             li{
                 border: solid 1px rgba(126, 205, 244, 1);
                 &:nth-child(2n){
