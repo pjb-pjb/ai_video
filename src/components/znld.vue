@@ -1,10 +1,18 @@
 <template>
     <div class="root znld">
         <ul class="video-box">
-           <li></li>
-           <li></li>
-           <li></li>
-           <li></li>
+           <li>
+               <videoBox></videoBox>
+           </li>
+           <li>
+               <videoBox></videoBox>
+           </li>
+           <li>
+               <videoBox></videoBox>
+           </li>
+           <li>
+               <videoBox></videoBox>
+           </li>
         </ul>
         <div class="right">
             <card height="43%" :isShowTop="false">
@@ -15,31 +23,26 @@
                     <el-table-column
                             prop="time"
                             label="时间"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
                             prop="sj"
                             label="联动事件"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
                             prop="state"
                             label="联动状态"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
                             prop="type"
                             label="事件类型"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
                             prop="isTrue"
                             label="是否确认"
-                            align="center"
                     >
                     </el-table-column>
                 </el-table>
@@ -55,36 +58,30 @@
                     <el-table-column
                             prop="state"
                             label="联动状态"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
                             prop="sj"
                             label="联动设备"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
                             prop="time"
                             label="联动时间"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
                             prop="address1"
                             label="预期结果"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
                             prop="address2"
                             label="当前状态"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
                             label="视频监视"
-                            align="center"
                     >
                         <template slot-scope="scope">
                             <el-button
@@ -94,9 +91,6 @@
                         </template>
                     </el-table-column>
                 </el-table>
-                <div>
-                    <div @click="nowVideo()" style="float: right;color: #fff;padding: 10px 30px;cursor: pointer;"><span>实时视频</span><i class="el-icon-d-arrow-right"></i></div>
-                </div>
             </card>
         </div>
         <el-dialog title="历史数据" width="80%" :visible.sync="dialogTableVisible">
@@ -107,108 +101,39 @@
                 <el-table-column
                         prop="time"
                         label="时间"
-                        align="center"
                 >
                 </el-table-column>
                 <el-table-column
                         prop="sj"
                         label="联动事件"
-                        align="center"
                 >
                 </el-table-column>
                 <el-table-column
                         prop="state"
                         label="联动状态"
-                        align="center"
                 >
                 </el-table-column>
                 <el-table-column
                         prop="type"
                         label="事件类型"
-                        align="center"
                 >
                 </el-table-column>
                 <el-table-column
                         prop="isTrue"
                         label="是否确认"
-                        align="center"
                 >
                 </el-table-column>
                 <el-table-column
                         label="操作"
-                        align="center"
                 >
                     <template slot-scope="scope">
                         <el-button
                                 size="mini"
                                 type="primary"
-                                @click="seeXq()">查看</el-button>
+                                >查看</el-button>
                     </template>
                 </el-table-column>
             </el-table>
-            <el-dialog
-                    width="70%"
-                    title="电子围栏五区（北）入侵报警"
-                    :visible.sync="innerVisible"
-                    append-to-body
-            >
-                <el-table
-                        :data="tableData1"
-                        border
-                        style="width: 100%">
-                    <el-table-column
-                            prop="state"
-                            label="联动状态"
-                            align="center"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="sj"
-                            label="联动设备"
-                            align="center"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="time"
-                            label="联动时间"
-                            align="center"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="address1"
-                            label="预期结果"
-                            align="center"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="address2"
-                            label="当前状态"
-                            align="center"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            label="视频监视"
-                            align="center"
-                    >
-                        <template slot-scope="scope">
-                            <el-button
-                                    size="mini"
-                                    type="primary"
-                                    @click="handleDelete(scope.$index, scope.row)">视频</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </el-dialog>
-        </el-dialog>
-        <el-dialog width="45%" title="实时视频" :visible.sync="isShowNowVideo">
-            <div class="now-video">
-                <div class="box">
-
-                </div>
-                <div class="tree">
-                    <el-tree :data="data" @node-click="handleNodeClick"></el-tree>
-                </div>
-            </div>
         </el-dialog>
     </div>
 
@@ -247,16 +172,7 @@
                 }],
                 dialogTableVisible:false,
                 innerVisible:false,
-                isShowNowVideo:false,
-                data: [{
-                    label: '福瑞站',
-                    children: [{
-                        label: '二级',
-                        data:{
-                            n:1
-                        }
-                    }]
-                }]
+                isShowNowVideo:false
             }
         },
         mounted() {
@@ -264,18 +180,6 @@
         methods: {
             mhistory(){
                 this.dialogTableVisible = true;
-            },
-            seeXq(){
-                this.innerVisible = true;
-            },
-            nowVideo(){
-                this.isShowNowVideo = true;
-            },
-            handleNodeClick(a,b){
-                let data = a.data;
-                if(b.level==2){
-                    console.log(data);
-                }
             }
         }
     }
@@ -298,7 +202,6 @@
         li{
             width: calc(50% - 5px);
             height: calc(50% - 5px);
-            background: red;
         }
     }
     .right{
