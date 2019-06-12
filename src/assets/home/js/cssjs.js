@@ -10,8 +10,8 @@ $(function() {
         });
     };
     setInterval(function() {
-        doscroll('.con-right-down-con ul');
-        doscroll('.con-left-down-con ul');
+        // doscroll('.con-right-down-con ul');
+        // doscroll('.con-left-down-con ul');
     }, 2000);
 
     function clock() {
