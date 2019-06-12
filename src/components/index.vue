@@ -41,7 +41,7 @@
                     },
                     {
                         path: "/xwfx",
-                        title: "行为分析记录"
+                        title: "告警记录"
                     }
                 ],
                 activeIndex: 0,
@@ -53,7 +53,7 @@
             jump(item,index){
                 this.activeIndex = index;
                 this.title = item.title;
-                this.$router.push(item.path+"?n="+index+"&name="+this.name);
+                this.$router.push(item.path+"?n="+index+"&name="+this.name+"&title="+this.title);
             },
             backHome(){
                 this.$router.push("home");
@@ -61,6 +61,7 @@
         },
         mounted() {
             this.activeIndex = this.$route.query.n?this.$route.query.n:0;
+            this.activeIndex = this.$route.query.title?this.$route.query.title:"全面监控";
             this.name = this.$route.query.name;
         }
     }

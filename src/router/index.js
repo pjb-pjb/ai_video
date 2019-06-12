@@ -8,6 +8,7 @@ import Home from '@/components/home';
 import Login from '@/components/login';
 import Qmjk from '@/components/qmjk';
 import Spjk from '@/components/spjk';
+import Xwfx from '@/components/xwfx';
 
 
 //引入base64
@@ -40,7 +41,7 @@ var router = new Router({
                 },
                 {
                     path:"/xwfx",
-                    // component: Xwfx
+                    component: Xwfx
                 },
                 {
                     path:"",
