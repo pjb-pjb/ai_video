@@ -2,16 +2,24 @@
     <div class="root znld">
         <ul class="video-box">
            <li>
-               <videoBox></videoBox>
+               <videoBox url="35kV设备区1号主变压器35kV侧3001断路器A相QS1压力表.jpg">
+                   <mVideo h5id="one1" token="15e1--1"></mVideo>
+               </videoBox>
            </li>
            <li>
-               <videoBox></videoBox>
+               <videoBox url="35kV设备区1号主变压器35kV侧3001断路器分合指示.jpg">
+                   <mVideo h5id="one2" token="15e1--1"></mVideo>
+               </videoBox>
            </li>
            <li>
-               <videoBox></videoBox>
+               <videoBox url="35kV设备区1号主变压器35kV侧3001间隔汇控柜可见光拍照.jpg">
+                   <mVideo h5id="one3" token="15e1--1"></mVideo>
+               </videoBox>
            </li>
            <li>
-               <videoBox></videoBox>
+               <videoBox url="35kV设备区1号主变压器35kV侧30011隔离开关分合指示.jpg">
+                   <mVideo h5id="one4" token="15e1--1"></mVideo>
+               </videoBox>
            </li>
         </ul>
         <div class="right">
@@ -68,11 +76,6 @@
                     <el-table-column
                             prop="time"
                             label="联动时间"
-                    >
-                    </el-table-column>
-                    <el-table-column
-                            prop="address1"
-                            label="预期结果"
                     >
                     </el-table-column>
                     <el-table-column

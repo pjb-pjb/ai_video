@@ -39,6 +39,10 @@ var router = new Router({
                     component: Spjk
                 },
                 {
+                    path:"/xwfx",
+                    // component: Xwfx
+                },
+                {
                     path:"",
                     component: Qmjk
                 }

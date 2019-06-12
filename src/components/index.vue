@@ -38,6 +38,10 @@
                     {
                         path: "/znld",
                         title: "智能联动"
+                    },
+                    {
+                        path: "/xwfx",
+                        title: "行为分析记录"
                     }
                 ],
                 activeIndex: 0,
