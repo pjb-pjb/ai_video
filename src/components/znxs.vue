@@ -77,7 +77,7 @@
                             <el-button
                                     size="mini"
                                     type="primary"
-                                    @click="handleDelete(scope.$index, scope.row)">查看报告</el-button>
+                                    @click="isShowBaoGao = true">查看报告</el-button>
                         </template>
                     </el-table-column>
                     <el-table-column
@@ -100,14 +100,14 @@
                 <el-col :span="12" class="my-height">
                     <el-tree
                         :data="data1"
-                        @node-click="handleNodeClick1"
+                        @node-click=""
                         show-checkbox
                     ></el-tree>
                 </el-col>
                 <el-col :span="12" class="my-height">
                     <el-tree
                         :data="data2"
-                        @node-click="handleNodeClick2"
+                        @node-click=""
                         show-checkbox
                     ></el-tree>
                 </el-col>
@@ -137,13 +137,32 @@
 
 
                     <el-form-item label="策略简介">
-                        <el-input type="textarea" v-model="form.desc"></el-input>
+                        <el-input type="textarea" style="height:auto;resize:none;" v-model="form.desc"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="isShowCeLue = false">取消</el-button>
                     </el-form-item>
                 </el-form>
 
+
+            </el-row>
+
+        </el-dialog>
+
+        <el-dialog width="50%"  title="查看报告" :visible.sync="isShowBaoGao">
+            <el-row class="my-height"  style="width:90%;margin:0 auto">
+
+                <h2 style="text-align:center;">一号主变巡检报告</h2>
+                <p  style="text-align:center;">时间：2019-6-12 10:10:10   天气：晴  报告员：管理员</p>
+                <br>
+                <center>
+                    <img style="width:300px;display:inline-block" src="/static/img/35kV设备区1号主变压器35kV侧3001间隔汇控柜可见光拍照.jpg" alt=""><br>
+                    <img style="width:300px;display:inline-block;" src="/static/img/35kV设备区1号主变压器35kV侧30011隔离开关分合指示.jpg" alt=""><br>
+                    <img style="width:300px;display:inline-block;" src="/static/img/35kV设备区1号主变压器35kV侧3001间隔汇控柜可见光拍照.jpg" alt=""><br>
+                    <img style="width:300px;display:inline-block;" src="/static/img/35kV设备区1号站用变压器301130接地刀闸分合指示.jpg" alt=""><br>
+                    <img style="width:300px;display:inline-block;" src="/static/img/35kV设备区1号站用变压器3011断路器A相QS1压力表.jpg" alt=""><br>
+                    <img style="width:300px;display:inline-block;" src="/static/img/35kV设备区1号主变压器35kV侧3001间隔汇控柜可见光拍照.jpg" alt=""><br>
+                </center>
 
             </el-row>
 
@@ -163,6 +182,7 @@
                     endTime:"2019-6-22 08:00:00",
                     desc:"一号主变巡检策略电线路巡检系统完整的设计策略；详细描述了平台选型方案、系统架构设计方案和系统功能设计方案；提出了具有高扩展性的设备管理数据结构设计思路；阐述了PDA移动端的地图组织、数据库设计思路和业务功能设计。输电线路巡检是有效保障输电网安全运行的一项重要工作，能够有效掌握输电线路运行状况及周围环境的变化，发现设施缺陷和安全隐患。"
                 },
+                isShowBaoGao:false,
                 data1: [{
                     label: '摄像头',
                     children: [{
