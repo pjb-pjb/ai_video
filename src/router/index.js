@@ -7,6 +7,7 @@ import Znld from '@/components/znld';
 import Home from '@/components/home';
 import Login from '@/components/login';
 import Qmjk from '@/components/qmjk';
+import Spjk from '@/components/spjk';
 
 
 //引入base64
@@ -32,6 +33,10 @@ var router = new Router({
                 {
                     path:"/qmjk",
                     component: Qmjk
+                },
+                {
+                    path:"/spjk",
+                    component: Spjk
                 },
                 {
                     path:"",

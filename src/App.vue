@@ -17,6 +17,20 @@
 
         },
         mounted() {
+            window.addEventListener("keydown",function (e) {
+                if(e.keyCode==8&&sessionStorage.isLogin=="yes"){
+                    this.$confirm('确认退出系统吗？', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        sessionStorage.clear();
+                        this.$router.push("login");
+                    }).catch(() => {
+
+                    });
+                }
+            }.bind(this));
         }
     }
 </script>

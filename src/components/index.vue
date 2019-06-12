@@ -1,6 +1,11 @@
 <template>
     <div class="index-box">
-        <div class="root-head">{{title}}</div>
+        <div class="root-head">
+            {{name}}-{{title}}
+            <div class="back-home">
+                <el-button type="primary" @click="backHome()">首页</el-button>
+            </div>
+        </div>
         <div class="main">
             <router-view/>
         </div>
@@ -23,6 +28,10 @@
                         title: "全面监控"
                     },
                     {
+                        path: "/spjk",
+                        title: "视频监控"
+                    },
+                    {
                         path: "/znxs",
                         title: "智能巡视"
                     },
@@ -32,18 +41,23 @@
                     }
                 ],
                 activeIndex: 0,
-                title:"全面监控"
+                title:"全面监控",
+                name:""
             }
         },
         methods: {
             jump(item,index){
                 this.activeIndex = index;
                 this.title = item.title;
-                this.$router.push(item.path+"?n="+index);
+                this.$router.push(item.path+"?n="+index+"&name="+this.name);
+            },
+            backHome(){
+                this.$router.push("home");
             }
         },
         mounted() {
             this.activeIndex = this.$route.query.n?this.$route.query.n:0;
+            this.name = this.$route.query.name;
         }
     }
 </script>
@@ -89,5 +103,13 @@
         line-height: 90px;
         color: #fff;
         font-size: 36px;
+        position: relative;
+        .back-home{
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            margin: auto 0;
+        }
     }
 </style>
