@@ -13,6 +13,9 @@ Vue.use(VueAxios, axios);
 //启动拦截器
 interceptor(axios);
 
+//引入icon
+import '@/assets/material/css/style.css'
+
 //引入element-ui,模块化引入组件
 import {
 	Pagination,

@@ -1,8 +1,12 @@
 <template>
     <div class="znxs">
         <ul class="video-box">
-            <li></li>
-            <li></li>
+            <li>
+                <mVideo h5id="one1" token="15e1--1"></mVideo>
+            </li>
+            <li>
+                <mVideo h5id="one2" token="15e1--1"></mVideo>
+            </li>
             <li></li>
             <li></li>
             <li></li>
