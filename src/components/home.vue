@@ -42,27 +42,25 @@
 
 <script>
 import "../assets/home/js/jquery-2.1.4.min.js";
-// import "../assets/home/js/ipAddress.js";
-// import "../assets/home/js/echarts.js";
-// import "../assets/home/js/shanxi.js";
 import "../assets/home/js/index.js";
-import "../assets/home/js/jedate/jedate.js";
 import "../assets/home/js/cssjs.js";
-function clock() {
-    var now = new Date()
-    var year = 1900 + now.getYear() + "年<span style='color:#01d8ff;'>" + (now.getMonth() + 1) + "</span>月<span style='color:#01d8ff;'>" + now.getDate() + "</span>日 ";
-    var hour = "<span style='color:#01d8ff;'>" + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + "</span> 星期";
-    var weekString = "日一二三四五六";
-    var week = "<span style='color:#01d8ff;'>" + weekString[now.getDay()] + "</span>";
-    var datatime = year + hour + week;
-    document.getElementById("clock").innerHTML = datatime;
-}
+
     export default {
         name: 'Home',
         data() {
             return {
                 //标记选中登录还是取消
                 work:[
+                    {
+                        name:"周界轮询",
+                        time:"2019-05-06  15:20:10",
+                        des:"围墙东北角球型摄像机-围墙西北角球型摄像机-变电站全景摄像机"
+                    },
+                    {
+                        name:"周界轮询",
+                        time:"2019-05-06  15:20:10",
+                        des:"围墙东北角球型摄像机-围墙西北角球型摄像机-变电站全景摄像机"
+                    },
                     {
                         name:"周界轮询",
                         time:"2019-05-06  15:20:10",
@@ -129,15 +127,11 @@ function clock() {
         methods: {
         },
         mounted(){
-                //年月日时分秒时间
-                setInterval(function() {
-                    clock();
-                }, 1000);
-                var $url = new IpParameters();
-                var _this = this;
+
+            var _this = this;
 
             $.ajax({
-                url: $url.shanximap(), //json文件位置
+                url: "/static/json/map.json", //json文件位置
                 type: "GET", //请求方式为get
                 dataType: "json",
                 success: function(data) {
@@ -325,6 +319,9 @@ function clock() {
                 }
             });
 
+
+
+
         }
     }
 
@@ -410,8 +407,8 @@ function clock() {
         background: url(../assets/home/images/bj-1.png) no-repeat;
         background-size: 100% 100%;
         box-sizing: border-box;
-        padding-left:40px;
-        padding-right: 40px;
+        padding-left:50px;
+        padding-right: 50px;
         overflow-x: hidden;
         overflow-y: hidden;
         display: flex;
@@ -456,6 +453,7 @@ function clock() {
         float: left;
         background: url(../assets/home/images/map-bj.png) no-repeat;
         background-size: 100% 100%;
+        height:100vh;
     }
     .con-mid-title{
         margin-top: 17px;
@@ -465,14 +463,14 @@ function clock() {
         background: url(../assets/home/images/title.png) no-repeat;
         background-size: 100% 100%;
         text-align: center;
-        font-size: 36px;
+        font-size: 34px;
         color: #01d8ff;
         font-weight: bold;
         padding-left: 10px;
     }
     .con-mid-con{
         width: 100%;
-        height: 1002px;
+        height: calc(100% - 60px);
     }
     .con-right{
         float: left;
