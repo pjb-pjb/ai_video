@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="con-mid">
-            <div class="con-mid-title">变电站全面监控平台</div>
+            <div class="con-mid-title">变电站立体巡检智能管控平台</div>
             <div class="con-mid-con" id="map">
             </div>
         </div>
@@ -134,6 +134,7 @@ function clock() {
                     clock();
                 }, 1000);
                 var $url = new IpParameters();
+                var _this = this;
 
             $.ajax({
                 url: $url.shanximap(), //json文件位置
@@ -301,6 +302,23 @@ function clock() {
                         ]
                     };
                     mapChart.setOption(option);
+
+                    window.onresize = function(){
+                        mapChart.resize();
+                        //myChart1.resize();    //若有多个图表变动，可多写
+
+                    }
+
+                    mapChart.on('click',  (param)=>{
+                        // var name=param.name;
+
+
+                        if(param.componentType == 'series'){
+
+                            _this.$router.push({path:'/',query:{name:param.data.name}})
+                        }
+
+                    })
                 },
                 error: function(data) {
                     console.log("地图数据请求失败");
@@ -454,7 +472,7 @@ function clock() {
     }
     .con-mid-con{
         width: 100%;
-        height: 100%;
+        height: 1002px;
     }
     .con-right{
         float: left;
@@ -464,8 +482,7 @@ function clock() {
 
     .con-left-down{
         width:100%;
-        height: 950px;
-        height: calc(100% - 40px);
+        height: calc(100% - 50px);
         background: url(../assets/home/images/con-left-down-bj.png) no-repeat;
         background-size: 100% 100%;
     }
@@ -510,4 +527,5 @@ function clock() {
         padding-top: 20px;
         margin-bottom: 5px;
     }
+
 </style>
