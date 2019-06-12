@@ -102,6 +102,26 @@ function clock() {
                         name:"周界轮询",
                         time:"2019-05-06  15:20:10",
                         des:"围墙东北角球型摄像机-围墙西北角球型摄像机-变电站全景摄像机"
+                    },
+                    {
+                        name:"周界轮询",
+                        time:"2019-05-06  15:20:10",
+                        des:"围墙东北角球型摄像机-围墙西北角球型摄像机-变电站全景摄像机"
+                    },
+                    {
+                        name:"周界轮询",
+                        time:"2019-05-06  15:20:10",
+                        des:"围墙东北角球型摄像机-围墙西北角球型摄像机-变电站全景摄像机"
+                    },
+                    {
+                        name:"周界轮询",
+                        time:"2019-05-06  15:20:10",
+                        des:"围墙东北角球型摄像机-围墙西北角球型摄像机-变电站全景摄像机"
+                    },
+                    {
+                        name:"周界轮询",
+                        time:"2019-05-06  15:20:10",
+                        des:"围墙东北角球型摄像机-围墙西北角球型摄像机-变电站全景摄像机"
                     }
                 ]
             }
@@ -298,7 +318,10 @@ function clock() {
     .work{
         color: #fff;
         li{
+            height:60px;
             border: solid 1px rgba(126, 205, 244, 1);
+            display: flex;
+            line-height: 30px;
             &:nth-child(2n){
                  background: #40789e;
              }
@@ -307,23 +330,29 @@ function clock() {
              }
             .name{
                 width: 20%;
-                padding-left: 30px;
+                padding-left: 10px;
+                overflow: hidden;
             }
             .time{
                 width: 20%;
-                padding-left: 20px;
+                padding-left: 10px;
+                overflow: hidden;
             }
             .des{
                 width: 60%;
-                padding-left: 20px;
+                padding-left: 10px;
+                overflow: hidden;
             }
         }
     }
     .warn{
         color: #fe0000;
         li{
-            height:100px;
+            height:60px;
             border: solid 1px rgba(126, 205, 244, 1);
+            line-height: 30px;
+            display: flex;
+
             &:nth-child(2n){
                  background: #40789e;
              }
@@ -331,20 +360,25 @@ function clock() {
                  background-color:#3e71b4;
              }
             .name{
-                width: 10%;
-                padding-left: 30px;
+                width: 8%;
+                padding-left: 10px;
+                overflow: hidden;
+
             }
             .time{
                 width: 20%;
-                padding-left: 20px;
+                padding-left: 10px;
+                overflow: hidden;
             }
             .dev{
                 padding-left: 10px;
-                width: 10%;
+                width: 20%;
+                overflow: hidden;
             }
             .des{
-                width: 60%;
-                padding-left: 20px;
+                width: 50%;
+                padding-left: 10px;
+                overflow: hidden;
             }
         }
     }
@@ -353,26 +387,31 @@ function clock() {
     }
     .container {
         width: 100%;
-        height: 1080px;
+        height: 100vh;
         margin: 0px auto;
         background: url(../assets/home/images/bj-1.png) no-repeat;
         background-size: 100% 100%;
+        box-sizing: border-box;
+        padding-left:40px;
+        padding-right: 40px;
         overflow-x: hidden;
         overflow-y: hidden;
+        display: flex;
+        justify-content: space-around;
     }
     .con-left{
-        width:561px;
+        width:30%;
         float: left;
-        margin: 83px 0px 0px 48px;
+        margin: 83px 0px 0px 0px;
     }
     .con-let-top{
-        width:561px;
+        width:100%;
         height: 950px;
         background: url(../assets/home/images/con-right-down-bj.png) no-repeat;
         background-size: 100% 100%;
     }
     .con-right-time{
-        width:561px;
+        width:100%;
         height: 81px;
         line-height: 81px;
         color: #FFFFFF;
@@ -389,19 +428,20 @@ function clock() {
         line-height: 31px;
     }
     .con-let-top-con{
-        width:561px;
+        width:100%;
+        padding:5px;
         height: 307px;
     }
 
     .con-mid{
-        width: 700px;
+        width: 40%;
         float: left;
         background: url(../assets/home/images/map-bj.png) no-repeat;
         background-size: 100% 100%;
     }
     .con-mid-title{
         margin-top: 17px;
-        width: 690px;
+        width: 100%;
         height:61px ;
         line-height: 56px;
         background: url(../assets/home/images/title.png) no-repeat;
@@ -413,18 +453,19 @@ function clock() {
         padding-left: 10px;
     }
     .con-mid-con{
-        width: 700px;
-        height: 1002px;
+        width: 100%;
+        height: 100%;
     }
     .con-right{
         float: left;
-        width:516px;
-        margin:83px 50px 0px 0px;
+        width:40%;
+        margin:83px 0px 0px 0px;
     }
 
     .con-left-down{
-        width:561px;
+        width:100%;
         height: 950px;
+        height: calc(100% - 40px);
         background: url(../assets/home/images/con-left-down-bj.png) no-repeat;
         background-size: 100% 100%;
     }
@@ -438,16 +479,17 @@ function clock() {
         line-height: 31px;
     }
     .con-left-down-con{
-        width:561px;
-        height: 900px;
+        width:calc(100% - 12px);
+        margin:0 auto;
+        height: calc(100% - 30px);
         overflow: hidden;
         padding-top: 20px;
         margin-bottom: 5px;
     }
 
     .con-right-down{
-        width:561px;
-        height: 870px;
+        width:100%;
+        height: calc(100% - 120px);
         background: url(../assets/home/images/con-right-down-bj.png) no-repeat;
         background-size: 100% 100%;
     }
@@ -461,11 +503,11 @@ function clock() {
         line-height: 31px;
     }
     .con-right-down-con{
-        width:561px;
-        height: 820px;
+        width:calc(100% - 12px);
+        margin: 0 auto;
+        height: calc(100% - 30px);
         overflow: hidden;
         padding-top: 20px;
         margin-bottom: 5px;
     }
-
 </style>

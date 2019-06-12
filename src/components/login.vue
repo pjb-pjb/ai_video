@@ -16,9 +16,9 @@
                     <el-form-item label="密码" prop="pass">
                         <el-input type="password" v-model="formLabelAlign.pass" placeholder='请输入密码'></el-input>
                     </el-form-item>
-                    <el-form-item label="双因子验证">
-                        <el-input v-model="formLabelAlign.code" placeholder="校验通过"></el-input>
-                    </el-form-item>
+                    <!--<el-form-item label="双因子验证">-->
+                    <!--<el-input v-model="formLabelAlign.code" placeholder="校验通过"></el-input>-->
+                    <!--</el-form-item>-->
                 </el-form>
             </div>
             <div class="bottom">
@@ -68,34 +68,44 @@
                 this.$refs["ruleForm"].validate((valid) => {
                     if (!valid) {
                     } else {
-                        loginCheck.data = {
-                            "userNameOrEmailAddress": this.formLabelAlign.name,
-                            "password": this.formLabelAlign.pass,
-                            "rememberClient": true
-                        }
-                        $ajax(loginCheck,  (res)=>{
-                            if (res && res.data.success) {
-                                sessionStorage[base64.encode("isLogin")] = base64.encode("yes"),
-                                sessionStorage[base64.encode("token")] = base64.encode(res.data.result.accessToken);
-                                sessionStorage[base64.encode("username")] = base64.encode(this.formLabelAlign.name);
-                                this.$store.state.isHaveRouter = false;
-                                this.$message({
-                                    message: '登录成功',
-                                    type: 'success'
-                                });
-                                this.$router.push("/nav");
-                            }else {
-                                this.$message({
-                                    message: '登录失败',
-                                    type: 'error'
-                                });
-                            }
-                        }, function () {
+                        var data = this.formLabelAlign;
+                        if (data.name == "admin" && data.pass == "zzes1234") {
+                            sessionStorage.isLogin = "yes";
+                            this.$router.push("/");
+                        } else {
                             this.$message({
                                 message: '登录失败',
                                 type: 'error'
                             });
-                        });
+                        }
+                        // loginCheck.data = {
+                        //     "userNameOrEmailAddress": this.formLabelAlign.name,
+                        //     "password": this.formLabelAlign.pass,
+                        //     "rememberClient": true
+                        // }
+                        // $ajax(loginCheck,  (res)=>{
+                        //     if (res && res.data.success) {
+                        //         sessionStorage[base64.encode("isLogin")] = base64.encode("yes"),
+                        //         sessionStorage[base64.encode("token")] = base64.encode(res.data.result.accessToken);
+                        //         sessionStorage[base64.encode("username")] = base64.encode(this.formLabelAlign.name);
+                        //         this.$store.state.isHaveRouter = false;
+                        //         this.$message({
+                        //             message: '登录成功',
+                        //             type: 'success'
+                        //         });
+                        //         this.$router.push("/nav");
+                        //     }else {
+                        //         this.$message({
+                        //             message: '登录失败',
+                        //             type: 'error'
+                        //         });
+                        //     }
+                        // }, function () {
+                        //     this.$message({
+                        //         message: '登录失败',
+                        //         type: 'error'
+                        //     });
+                        // });
                     }
                 });
             },
@@ -119,13 +129,13 @@
             image: url(../assets/login/bg.png);
             size: 100% 100%;
         }
+        margin: 0;
         main {
             max-width: 793px;
             height: 450px;
             margin: 100px auto 0;
             padding: 0 50px;
             box-sizing: border-box;
-
             .top {
                 width: 693px;
                 height: 63px;
@@ -164,7 +174,9 @@
                 height: 286px;
                 background-color: #172070;
                 border: solid 1px #42bdff;
-
+                .el-form-item {
+                    margin: 50px 0px;
+                }
                 .el-form-item__label {
                     color: #fff;
                 }
@@ -227,7 +239,7 @@
                 }
             }
         }
-        footer{
+        footer {
             color: #e7eafd;
             font-size: 14px;
             text-align: center;

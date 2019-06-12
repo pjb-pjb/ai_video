@@ -1,14 +1,8 @@
 <template>
     <div id="app">
-        <!--<div class="root-head">{{title}}</div>-->
-        <!--<div class="main">-->
+
             <router-view/>
-        <!--</div>-->
-        <!--<div class="root-foot">-->
-            <!--<ul>-->
-                <!--<li @click="jump(item,index)" :class="{active:activeIndex==index}" :style="'width:'+100/footList.length+'%;'" v-for="(item,index) in footList" v-bind:key="index">{{item.title}}</li>-->
-            <!--</ul>-->
-        <!--</div>-->
+
     </div>
 </template>
 
@@ -17,33 +11,12 @@
         name: 'App',
         data() {
             return {
-                footList: [
-                    {
-                        path: "/",
-                        title: "全面监控"
-                    },
-                    {
-                        path: "/znxs",
-                        title: "智能巡视"
-                    },
-                    {
-                        path: "/znld",
-                        title: "智能联动"
-                    }
-                ],
-                activeIndex: 0,
-                title:"全面监控"
             }
         },
         methods: {
-            jump(item,index){
-                this.activeIndex = index;
-                this.title = item.title;
-                this.$router.push(item.path+"?n="+index);
-            }
+
         },
         mounted() {
-            this.activeIndex = this.$route.query.n?this.$route.query.n:0;
         }
     }
 </script>
@@ -105,7 +78,7 @@
         }
 
     }
-    .root-head{
+    .root-head {
         height: 90px;
         text-align: center;
         line-height: 90px;

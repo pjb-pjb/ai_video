@@ -5,7 +5,7 @@ import {handleRequestLoading,handleResponseLoading} from "./loading";
 export default function (axios) {
     //定义一个请求拦截器
     axios.interceptors.request.use(function (config) {
-        handleRequestLoading();
+        // handleRequestLoading();
 		//配置头信息
 		// config.headers = {
          //    expireInSeconds:86400,
@@ -15,7 +15,7 @@ export default function (axios) {
     });
 	//定义一个响应拦截器
     axios.interceptors.response.use(function (config) {
-        handleResponseLoading();
+        // handleResponseLoading();
         return config;
     },function () {
         handleResponseLoading();
