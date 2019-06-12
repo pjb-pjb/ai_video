@@ -39,10 +39,13 @@ var router = new Router({
                 }
             ]
         },
-
         {
             path: "/home",
             component: Home,
+        },
+        {
+            path: "/login",
+            component:Login,
         },
         {
             path: "*",
@@ -52,14 +55,14 @@ var router = new Router({
 });
 
 
-//路由守卫
-//进入路由之前
-// router.beforeEach((to, from, next) => {
-//     if(sessionStorage.isLogin=="yes"||to.path=="/login"){
-//         next();
-//     }else {
-//         next("login");
-//     }
-// });
+// 路由守卫
+// 进入路由之前
+router.beforeEach((to, from, next) => {
+    if(sessionStorage.isLogin=="yes"||to.path=="/login"){
+        next();
+    }else {
+        next("login");
+    }
+});
 export default router;
 

@@ -71,7 +71,7 @@
                         var data = this.formLabelAlign;
                         if (data.name == "admin" && data.pass == "zzes1234") {
                             sessionStorage.isLogin = "yes";
-                            this.$router.push("/");
+                            this.$router.push("/home");
                         } else {
                             this.$message({
                                 message: '登录失败',
