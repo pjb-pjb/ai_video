@@ -59,7 +59,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="con-right-mid">
-                                <div class="con-right-mid-title">主变负荷</div>
+                                <div class="con-right-mid-title">华北·福瑞站</div>
                                 <div class="con-right-mid-con">
 
                                     <div class="con-right-mid-con-down" id="zbfh"></div>
@@ -91,7 +91,7 @@
 
                     <div class="top">
                         <div class="top-title">
-                            值班信息
+                            华北·福瑞站
                         </div>
                         <ul>
                             <li>
@@ -195,6 +195,11 @@
                                     <div class="list">
                                         <div>
                                             <div class="text">设备</div>
+                                            <ddd index="0"></ddd>
+                                            <ddd index="0" :isWarn="true"></ddd>
+                                        </div>
+                                        <div>
+                                            <div class="text">状态</div>
                                             <ddd index="0"></ddd>
                                             <ddd index="0" :isWarn="true"></ddd>
                                         </div>
