@@ -61,7 +61,7 @@
         },
         mounted() {
             this.activeIndex = this.$route.query.n?this.$route.query.n:0;
-            this.activeIndex = this.$route.query.title?this.$route.query.title:"全面监控";
+            this.title = this.$route.query.title?this.$route.query.title:"全面监控";
             this.name = this.$route.query.name;
         }
     }
