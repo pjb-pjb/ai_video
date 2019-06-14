@@ -12,7 +12,7 @@
                     <div class="coms">
                         <div class="con-left">
                             <div class="con-let-top">
-                                <div class="con-let-top-title">监控点历史告警统计</div>
+                                <div class="con-let-top-title">综合智能告警历史统计</div>
                                 <div class="con-let-top-con" id="bt">
                                 </div>
                             </div>
@@ -46,11 +46,11 @@
                                             <p class="data" style="color: red;">3263</p>
                                         </li>
                                         <li>
-                                            <p class="wenzi" style="color: #12a8ff;">预警辅控</p>
+                                            <p class="wenzi" style="color: #12a8ff;">工作表</p>
                                             <p class="data">210</p>
                                         </li>
                                         <li>
-                                            <p class="wenzi" style="color: #2cca76;">辅控信号</p>
+                                            <p class="wenzi" style="color: #2cca76;">告警</p>
                                             <p class="data" style="color: red;">10</p>
                                         </li>
                                     </ul>
@@ -59,17 +59,9 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="con-right-mid">
-                                <div class="con-right-mid-title">电站名称</div>
+                                <div class="con-right-mid-title">主变负荷</div>
                                 <div class="con-right-mid-con">
-                                    <div class="con-right-mid-con-top">
-                                        <!--<div class="con-right-mid-con-top-one" ></div>-->
-                                        <ul>
-                                            <li id="fs"></li>
-                                            <li id="wd"></li>
-                                            <li id="sd"></li>
-                                            <li id="ylyx"></li>
-                                        </ul>
-                                    </div>
+
                                     <div class="con-right-mid-con-down" id="zbfh"></div>
                                 </div>
                             </div>
@@ -108,7 +100,7 @@
                             </li>
                             <li>
                                 <div class="img-box two"></div>
-                                <div class="text">天气：{{info.weather}}</div>
+                                <div class="text">湿度：{{info.weather}}</div>
                             </li>
                             <li>
                                 <div class="img-box three"></div>
@@ -117,6 +109,10 @@
                             <li>
                                 <div class="img-box four"></div>
                                 <div class="text">风力：{{info.power}}</div>
+                            </li>
+                            <li>
+                                <div class="img-box four"></div>
+                                <div class="text">风向：{{info.power2}}</div>
                             </li>
                             <li>
                                 <div class="img-box five"></div>
@@ -310,9 +306,10 @@ import "../assets/home/js/cssjs.js";
                 //标记选中登录还是取消
                 info: {
                     address: "太原",
-                    weather: "晴",
-                    temperature: "7℃~22℃",
-                    power: "4~5级",
+                    weather: "20%",
+                    temperature: "7℃",
+                    power: "4级",
+                    power2: "东",
                     name: "小明",
                     time: "2019-5-6 15：00",
                     tel: "13822233366"
@@ -643,35 +640,66 @@ import "../assets/home/js/cssjs.js";
                 success: function(data) {
                     var myChart = echarts.init(document.getElementById('bt'));
                     var option = {
-                        tooltip: {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b}: {c} ({d}%)"
+                        // title : {
+                        //     text: '某地区蒸发量和降水量',
+                        // },
+                        tooltip : {
+                            trigger: 'axis'
                         },
-                        series: [{
-                            color: ['#e04236', '#eea130', '#11ae86'],
-                            name: '访问来源',
-                            type: 'pie',
-                            selectedMode: 'single',
-                            radius: [0, '40%'],
+                        legend: {
+                            textStyle: {
+                                color: '#32dfeb',
+                                fontSize: 12,
+                                shadowColor: '#0a4358'
+                            },
+                            data:['异常','事故','检修']
+                        },
+                        toolbox: {
+                            show : false,
 
-                            label: {
-                                normal: {
-                                    position: 'inner'
-                                }
-                            },
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
-                            data: data.data2
                         },
+                        calculable : true,
+                        xAxis : [
                             {
-                                color: ['#26a0e7', '#e04236', '#eea130', '#11ae86'],
-                                name: '访问来源',
-                                type: 'pie',
-                                radius: ['50%', '70%'],
-                                data: data.data1
+                                type : 'category',
+                                axisLine: {
+                                    lineStyle: {
+                                        color: '#fff',
+                                        fontSize: 12,
+                                    }
+                                },
+                                data : ['福瑞站','晋中站','朔州站','运城站']
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type: 'value',
+                                axisLine: {
+                                    lineStyle: {
+                                        fontSize: 12,
+                                        color: '#fff',
+                                    }
+                                }
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'异常',
+                                type:'bar',
+                                data:[12.0, 4.9, 17.0, 23.2],
+
+                            },
+                            {
+                                name:'事故',
+                                type:'bar',
+                                data:[182.2, 48.7, 18.8, 6.0],
+
+                            },
+                            {
+                                name:'检修',
+                                type:'bar',
+                                data:[12.2, 38.7, 58.8, 16.0],
+
                             }
                         ]
                     };
@@ -705,7 +733,7 @@ import "../assets/home/js/cssjs.js";
                                 fontSize: 12,
                                 shadowColor: '#0a4358'
                             },
-                            data: ['温度', '湿度', '风速', '雨雪', '雨量']
+                            data: ['消防', '安防', '环境', '照明', '在线监测']
                         },
                         grid: {
                             top: '3%',
@@ -735,7 +763,7 @@ import "../assets/home/js/cssjs.js";
                             }
                         }],
                         series: [{
-                            name: '温度',
+                            name: '消防',
                             type: 'line',
                             stack: '总量',
                             itemStyle: {
@@ -748,7 +776,7 @@ import "../assets/home/js/cssjs.js";
                             data: [120, 132, 101, 134, 90, 230, 210]
                         },
                             {
-                                name: '湿度',
+                                name: '安防',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -761,7 +789,7 @@ import "../assets/home/js/cssjs.js";
                                 data: [220, 182, 191, 234, 290, 330, 310]
                             },
                             {
-                                name: '风速',
+                                name: '环境',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -774,7 +802,7 @@ import "../assets/home/js/cssjs.js";
                                 data: [150, 232, 201, 154, 190, 330, 410]
                             },
                             {
-                                name: '雨雪',
+                                name: '照明',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -787,7 +815,7 @@ import "../assets/home/js/cssjs.js";
                                 data: [320, 332, 301, 334, 390, 330, 320]
                             },
                             {
-                                name: '雨量',
+                                name: '在线监测',
                                 type: 'line',
                                 stack: '总量',
                                 itemStyle: {
@@ -1076,415 +1104,6 @@ import "../assets/home/js/cssjs.js";
                     myChart.setOption(option);
                 }
             })
-            //仪表盘雨量雨雪
-            $.ajax({
-                url: '/static/json/jkdw.json', //json文件位置
-                type: "GET", //请求方式为get
-                dataType: "json", //返回数据格式为json
-                success: function(data) {
-                    var myChart = echarts.init(document.getElementById('ylyx'));
-                    var option = {
-                        tooltip: {
-                            formatter: "{a} <br/>{c} {b}"
-                        },
-                        series: [{
-                            name: '点数',
-                            type: 'gauge',
-                            radius: '96%',
-                            axisLine: { // 坐标轴线
-                                lineStyle: { // 属性lineStyle控制线条样式
-                                    color: [
-                                        [0.25, '#fae44d'],
-                                        [1.75, '#6d6e8c']
-                                    ],
-                                    width: 10,
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 3
-                                }
-                            },
-                            axisLabel: { // 坐标轴小标记
-                                textStyle: { // 属性lineStyle控制线条样式
-                                    fontWeight: 'bolder',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 2
-                                }
-                            },
-                            axisTick: { // 坐标轴小标记
-                                show: false
-                            },
-                            axisLabel: {
-                                show: false,
-                            },
-                            splitLine: { // 分隔线
-                                length: 10, // 属性length控制线长
-                                lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                                    width: 1,
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            pointer: {
-                                show: false,
-                                shadowColor: '#fff', //默认透明
-                                shadowBlur: 5
-                            },
-                            title: {
-                                offsetCenter: [0, '30%'], // x, y，单位px       // x, y，单位px
-                                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                                    fontWeight: 'bolder',
-                                    fontSize: 12,
-                                    fontStyle: 'italic',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            detail: {
-                                show: true,
-                                offsetCenter: [0, '-10%'],
-                                formatter: '{value}m/s',
-                                textStyle: {
-                                    fontSize: 18,
-                                    fontFamily: '微软雅黑',
-                                    color: '#fff',
-                                }
-                            },
-
-                            data: [{
-                                value: 40,
-                                name: '室外湿度'
-                            }]
-                        }]
-                    };
-                    myChart.setOption(option);
-                }
-            })
-            //仪表盘湿度
-            $.ajax({
-                url:  '/static/json/jkdw.json', //json文件位置
-                type: "GET", //请求方式为get
-                dataType: "json", //返回数据格式为json
-                success: function(data) {
-                    var myChart = echarts.init(document.getElementById('sd'));
-                    var option = {
-                        tooltip: {
-                            formatter: "{a} <br/>{c} {b}"
-                        },
-                        series: [{
-                            name: '点数',
-                            type: 'gauge',
-                            radius: '96%',
-                            axisLine: { // 坐标轴线
-                                lineStyle: { // 属性lineStyle控制线条样式
-                                    color: [
-                                        [0.25, '#fae44d'],
-                                        [1.75, '#6d6e8c']
-                                    ],
-                                    width: 10,
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 3
-                                }
-                            },
-                            axisLabel: { // 坐标轴小标记
-                                textStyle: { // 属性lineStyle控制线条样式
-                                    fontWeight: 'bolder',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 2
-                                }
-                            },
-                            axisTick: { // 坐标轴小标记
-                                show: false
-                            },
-                            axisLabel: {
-                                show: false,
-                            },
-                            splitLine: { // 分隔线
-                                length: 10, // 属性length控制线长
-                                lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                                    width: 1,
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            pointer: {
-                                show: false,
-                                shadowColor: '#fff', //默认透明
-                                shadowBlur: 5
-                            },
-                            title: {
-                                offsetCenter: [0, '30%'], // x, y，单位px       // x, y，单位px
-                                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                                    fontWeight: 'bolder',
-                                    fontSize: 12,
-                                    fontStyle: 'italic',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            detail: {
-                                show: true,
-                                offsetCenter: [0, '-10%'],
-                                formatter: '{value}m/s',
-                                textStyle: {
-                                    fontSize: 18,
-                                    fontFamily: '微软雅黑',
-                                    color: '#fff',
-                                }
-                            },
-
-                            data: [{
-                                value: 40,
-                                name: '室外湿度'
-                            }]
-                        }]
-                    };
-                    myChart.setOption(option);
-                }
-            })
-
-            //仪表盘温度
-            $.ajax({
-                url: '/static/json/jkdw.json', //json文件位置
-                type: "GET", //请求方式为get
-                dataType: "json", //返回数据格式为json
-                success: function(data) {
-                    var myChart = echarts.init(document.getElementById('wd'));
-                    var option = {
-                        tooltip: {
-                            formatter: "{a} <br/>{c} {b}"
-                        },
-                        series: [{
-                            name: '点数',
-                            type: 'gauge',
-                            radius: '96%',
-                            axisLine: { // 坐标轴线
-                                lineStyle: { // 属性lineStyle控制线条样式
-                                    color: [
-                                        [0.25, '#00ffff'],
-                                        [1.75, '#6d6e8c']
-                                    ],
-                                    width: 10,
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 3
-                                }
-                            },
-                            axisLabel: { // 坐标轴小标记
-                                textStyle: { // 属性lineStyle控制线条样式
-                                    fontWeight: 'bolder',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 2
-                                }
-                            },
-                            axisTick: { // 坐标轴小标记
-                                show: false
-                            },
-                            axisLabel: {
-                                show: false,
-                            },
-                            splitLine: { // 分隔线
-                                length: 10, // 属性length控制线长
-                                lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                                    width: 1,
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            pointer: {
-                                show: false,
-                                shadowColor: '#fff', //默认透明
-                                shadowBlur: 5
-                            },
-                            title: {
-                                offsetCenter: [0, '30%'], // x, y，单位px       // x, y，单位px
-                                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                                    fontWeight: 'bolder',
-                                    fontSize: 12,
-                                    fontStyle: 'italic',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            detail: {
-                                show: true,
-                                offsetCenter: [0, '-10%'],
-                                formatter: '{value}℃',
-                                textStyle: {
-                                    fontSize: 18,
-                                    color: '#fff',
-                                }
-                            },
-
-                            data: [{
-                                value: 40,
-                                name: '室外温度'
-                            }]
-                        }]
-                    };
-                    myChart.setOption(option);
-                }
-            })
-
-            $.ajax({
-                url: '/static/json/jkdw.json', //json文件位置
-                type: "GET", //请求方式为get
-                dataType: "json", //返回数据格式为json
-                success: function(data) {
-                    var myChart = echarts.init(document.getElementById('fs'));
-                    var option = {
-                        tooltip: {
-                            formatter: "{a} <br/>{c} {b}"
-                        },
-                        series: [{
-                            name: '点数',
-                            type: 'gauge',
-                            radius: '96%',
-                            axisLine: { // 坐标轴线
-                                lineStyle: { // 属性lineStyle控制线条样式
-                                    color: [
-                                        [0.0, '#f0eb37'],
-                                        [7.9, '#e68514'],
-                                        [20.4, '#e72519']
-                                    ],
-                                    width: 10,
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 3
-                                }
-                            },
-                            axisLabel: { // 坐标轴小标记
-                                textStyle: { // 属性lineStyle控制线条样式
-                                    fontWeight: 'bolder',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 2
-                                }
-                            },
-                            axisTick: { // 坐标轴小标记
-                                show: true
-                            },
-                            axisLabel: {
-                                show: true
-                            },
-                            splitLine: { // 分隔线
-                                length: 10, // 属性length控制线长
-                                lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                                    width: 1,
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            pointer: {
-                                show: true,
-                                shadowColor: '#ff0000', //默认透明
-                                shadowBlur: 5
-                            },
-                            title: {
-                                offsetCenter: [0, '30%'], // x, y，单位px       // x, y，单位px
-                                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                                    fontWeight: 'bolder',
-                                    fontSize: 12,
-                                    fontStyle: 'italic',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            detail: {
-                                show: true,
-                                offsetCenter: [0, '-10%'],
-                                formatter: '{value}m/s',
-                                textStyle: {
-                                    fontSize: 18,
-
-                                    color: '#fff',
-                                }
-                            },
-                            data: [{
-                                value: 40,
-                                name: '风速'
-                            }]
-                        }, {
-                            name: '点数',
-                            type: 'gauge',
-                            radius: '96%',
-                            axisLine: { // 坐标轴线
-                                lineStyle: { // 属性lineStyle控制线条样式
-                                    color: [
-                                        [0.0, '#f0eb37'],
-                                        [7.9, '#e68514'],
-                                        [20.4, '#e72519']
-                                    ],
-                                    width: 10,
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 3
-                                }
-                            },
-                            axisLabel: { // 坐标轴小标记
-                                textStyle: { // 属性lineStyle控制线条样式
-                                    fontWeight: 'bolder',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 2
-                                }
-                            },
-                            axisTick: { // 坐标轴小标记
-                                show: false
-                            },
-                            axisLabel: {
-                                show: false,
-                            },
-                            splitLine: { // 分隔线
-                                length: 10, // 属性length控制线长
-                                lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                                    width: 1,
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            pointer: {
-                                show: true,
-                                shadowColor: '#000000', //默认透明
-                                shadowBlur: 5
-                            },
-                            title: {
-                                offsetCenter: [0, '30%'], // x, y，单位px       // x, y，单位px
-                                textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                                    fontWeight: 'bolder',
-                                    fontSize: 12,
-                                    fontStyle: 'italic',
-                                    color: '#fff',
-                                    shadowColor: '#fff', //默认透明
-                                    shadowBlur: 10
-                                }
-                            },
-                            detail: {
-                                show: true,
-                                offsetCenter: [0, '-10%'],
-                                formatter: '{value}m/s',
-                                textStyle: {
-                                    fontSize: 18,
-
-                                    color: '#fff',
-                                }
-                            },
-                            data: [{
-                                value: 20,
-                                name: '风速'
-                            }]
-                        }]
-                    };
-                    myChart.setOption(option);
-                }
-            })
 
 
         }
@@ -1729,7 +1348,7 @@ import "../assets/home/js/cssjs.js";
                     }
                     .con-right-mid-con-down{
                         width: 561px;
-                        height: 291px;
+                        height: 100%;
                     }
                     .con-right-down{
                         width:561px;
