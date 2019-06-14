@@ -23,7 +23,7 @@ $(function() {
         var datatime = year + hour + week;
         document.getElementById("clock").innerHTML = datatime;
     }
-    clock();
+
     //年月日时分秒时间
     setInterval(function() {
         clock();

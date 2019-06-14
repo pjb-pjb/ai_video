@@ -5,6 +5,7 @@ import Index from '@/components/index';
 import Znxs from '@/components/znxs';
 import Znld from '@/components/znld';
 import Home from '@/components/home';
+import Home2 from '@/components/home2';
 import Login from '@/components/login';
 import Qmjk from '@/components/qmjk';
 import Spjk from '@/components/spjk';
@@ -52,6 +53,10 @@ var router = new Router({
         {
             path: "/home",
             component: Home,
+        },
+        {
+            path: "/home2",
+            component: Home2,
         },
         {
             path: "/login",
