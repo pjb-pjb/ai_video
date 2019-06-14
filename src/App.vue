@@ -18,6 +18,7 @@
         },
         mounted() {
             window.addEventListener("keydown",function (e) {
+                this.connection.invoke("SendInfo", "Hello");
                 if(e.keyCode==8&&sessionStorage.isLogin=="yes"){
                     this.$confirm('确认退出系统吗？', '提示', {
                         confirmButtonText: '确定',
@@ -31,6 +32,9 @@
                     });
                 }
             }.bind(this));
+            this.connection.on("getMessage", (data)=> {
+                console.log(data);
+            });
         }
     }
 </script>
