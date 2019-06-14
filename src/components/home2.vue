@@ -644,71 +644,44 @@ import "../assets/home/js/cssjs.js";
                 dataType: "json", //返回数据格式为json
                 success: function(data) {
                     var myChart = echarts.init(document.getElementById('bt'));
+
                     var option = {
-                        // title : {
-                        //     text: '某地区蒸发量和降水量',
-                        // },
-                        tooltip : {
-                            trigger: 'axis'
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)"
                         },
-                        legend: {
-                            textStyle: {
-                                color: '#32dfeb',
-                                fontSize: 12,
-                                shadowColor: '#0a4358'
-                            },
-                            data:['异常','事故','检修']
-                        },
-                        toolbox: {
-                            show : false,
+                        series: [{
+                            color: ['#e04236', '#eea130', '#11ae86'],
+                            name: '访问来源',
+                            type: 'pie',
+                            selectedMode: 'single',
+                            radius: [0, '40%'],
 
-                        },
-                        calculable : true,
-                        xAxis : [
-                            {
-                                type : 'category',
-                                axisLine: {
-                                    lineStyle: {
-                                        color: '#fff',
-                                        fontSize: 12,
-                                    }
-                                },
-                                data : ['福瑞站','晋中站','朔州站','运城站']
-                            }
-                        ],
-                        yAxis : [
-                            {
-                                type: 'value',
-                                axisLine: {
-                                    lineStyle: {
-                                        fontSize: 12,
-                                        color: '#fff',
-                                    }
+                            label: {
+                                normal: {
+                                    position: 'inner'
                                 }
-                            }
-                        ],
-                        series : [
-                            {
-                                name:'异常',
-                                type:'bar',
-                                data:[12.0, 4.9, 17.0, 23.2],
-
                             },
-                            {
-                                name:'事故',
-                                type:'bar',
-                                data:[182.2, 48.7, 18.8, 6.0],
-
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
                             },
+                            // data: data.data2
+                        },
                             {
-                                name:'检修',
-                                type:'bar',
-                                data:[12.2, 38.7, 58.8, 16.0],
-
+                                color: ['#26a0e7', '#e04236', '#eea130', '#11ae86'],
+                                name: '访问来源',
+                                type: 'pie',
+                                // radius: ['50%', '70%'],
+                                radius: ["30%", '70%'],
+                                data: data.data1
                             }
                         ]
                     };
                     myChart.setOption(option);
+
+
                 },
                 error: function(data) {
                     console.log("饼图数据请求失败！");
@@ -966,6 +939,8 @@ import "../assets/home/js/cssjs.js";
                             name: '点数',
                             type: 'gauge',
                             radius: '72%',
+                            max:28,
+                            splitNumber:4,
                             axisLine: { // 坐标轴线
                                 lineStyle: { // 属性lineStyle控制线条样式
                                     color: [
@@ -983,13 +958,15 @@ import "../assets/home/js/cssjs.js";
                                     color: '#fff',
                                     shadowColor: '#fff', //默认透明
                                     shadowBlur: 2
-                                }
+                                },
+
                             },
+
                             axisTick: { // 坐标轴小标记
                                 show: false
                             },
                             axisLabel: {
-                                show: false,
+                                show: true,
                             },
                             splitLine: { // 分隔线
                                 length: 10, // 属性length控制线长
@@ -1006,7 +983,7 @@ import "../assets/home/js/cssjs.js";
                                 shadowBlur: 5
                             },
                             title: {
-                                offsetCenter: [0, '30%'], // x, y，单位px       // x, y，单位px
+                                offsetCenter: [0, '80%'], // x, y，单位px       // x, y，单位px
                                 textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                                     fontWeight: 'bolder',
                                     fontSize: 12,
@@ -1018,17 +995,19 @@ import "../assets/home/js/cssjs.js";
                             },
                             detail: {
                                 show: true,
-                                offsetCenter: [0, '-10%'],
+                                offsetCenter: [0, '0%'],
                                 formatter: '{value}',
                                 textStyle: {
                                     fontSize: 18,
                                     fontFamily: '微软雅黑',
+                                    color:"#fff"
                                 }
                             },
 
                             data: [{
                                 value: 8,
-                                name: '监控点位'
+                                name: '监控点位',
+
                             }]
                         }]
                     };
@@ -1043,7 +1022,7 @@ import "../assets/home/js/cssjs.js";
                 dataType: "json", //返回数据格式为json
                 success: function(data) {
                     var myChart = echarts.init(document.getElementById('zbfh'));
-                    var colors = ['#fb4063', '#39adff'];
+                    var colors = ['#fb4063', '#39adff','#ffff00','#00ff00'];
                     var option = {
                         color: colors,
                         tooltip: {
@@ -1069,7 +1048,7 @@ import "../assets/home/js/cssjs.js";
                                 fontSize: 12,
                                 shadowColor: '#0a4358'
                             },
-                            data: ['今日主变负荷', '昨日主变负荷']
+                            data: ['今日1#主变负荷', '昨日1#主变负荷','今日2#主变负荷', '昨日2#主变负荷']
                         },
                         xAxis: [{
                             type: 'category',
@@ -1092,17 +1071,30 @@ import "../assets/home/js/cssjs.js";
                                 }
                             },
                         }],
-                        series: [{
-                            name: '今日主变负荷',
-                            type: 'line',
-                            smooth: true,
-                            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-                        },
+                        series: [
                             {
-                                name: '昨日主变负荷',
+                                name: '今日1#主变负荷',
+                                type: 'line',
+                                smooth: true,
+                                data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                            },
+                            {
+                                name: '昨日1#主变负荷',
                                 type: 'line',
                                 smooth: true,
                                 data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7]
+                            },
+                            {
+                                name: '今日2#主变负荷',
+                                type: 'line',
+                                smooth: true,
+                                data: [2.6, 5.9, 9.0, 26.4, 28.7, 6.0, 2.3, 70.7, 175.6, 182.2, 48.7, 18.8]
+                            },
+                            {
+                                name: '昨日2#主变负荷',
+                                type: 'line',
+                                smooth: true,
+                                data: [ 48.3, 69.2, 231.6, 46.6, 55.4,3.9, 5.9, 11.1, 18.7, 18.4, 10.3, 0.7]
                             }
                         ]
                     };
