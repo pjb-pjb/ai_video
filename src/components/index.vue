@@ -1,11 +1,5 @@
 <template>
     <div class="index-box">
-        <div class="root-head">
-            {{name}}-{{title}}
-            <div class="back-home">
-                <el-button type="primary" @click="backHome()">首页</el-button>
-            </div>
-        </div>
         <div class="main">
             <router-view/>
         </div>
@@ -24,7 +18,7 @@
             return {
                 footList: [
                     {
-                        path: "/",
+                        path: "/qmjk",
                         title: "全面监控"
                     },
                     {
@@ -53,10 +47,7 @@
             jump(item,index){
                 this.activeIndex = index;
                 this.title = item.title;
-                this.$router.push(item.path+"?n="+index+"&name="+this.name+"&title="+this.title);
-            },
-            backHome(){
-                this.$router.push("home");
+                this.$router.push(this.$store.state.path+item.path+"?n="+index+"&name="+this.name+"&title="+this.title);
             }
         },
         mounted() {
@@ -69,15 +60,13 @@
 
 <style scoped lang="scss">
     .index-box{
-        width: 100vw;
-        height: 100vh;
-        padding: 0 20px;
-        background-image: url("../assets/bj.png");
-        background-size: 100%;
+        width: 100%;
+        height: 100%;
+        padding-top: 30px;
     }
     .main{
         width: 100%;
-        height: calc(100% - 150px);
+        height: calc(100% - 60px);
     }
     .root-foot {
         height: 60px;

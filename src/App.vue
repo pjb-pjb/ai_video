@@ -18,7 +18,7 @@
         },
         mounted() {
             window.addEventListener("keydown",function (e) {
-                this.connection.invoke("SendInfo", "Hello");
+                // this.connection.invoke("SendInfo", "Hello");
                 if(e.keyCode==8&&sessionStorage.isLogin=="yes"){
                     this.$confirm('确认退出系统吗？', '提示', {
                         confirmButtonText: '确定',
@@ -26,7 +26,7 @@
                         type: 'warning'
                     }).then(() => {
                         sessionStorage.clear();
-                        this.$router.push("login");
+                        this.$router.push("/login");
                     }).catch(() => {
 
                     });
@@ -40,7 +40,13 @@
 </script>
 
 <style lang="scss">
+
     @import "./css/commom.scss";
+    html::-webkit-scrollbar{
+        width: 0;
+        height: 0;
+        display: none;
+    }
     * {
         margin: 0;
         padding: 0;

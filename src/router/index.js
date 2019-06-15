@@ -10,6 +10,7 @@ import Login from '@/components/login';
 import Qmjk from '@/components/qmjk';
 import Spjk from '@/components/spjk';
 import Xwfx from '@/components/xwfx';
+import Map from '@/components/map';
 
 
 //引入base64
@@ -21,42 +22,87 @@ Vue.use(Router);
 var router = new Router({
     routes: [
         {
-            path: "/",
-            component: Index,
+            path: "/home",
+            component: Home,
             children:[
                 {
-                    path: "/znxs",
-                    component: Znxs
+                    path:"map",
+                    component: Map
                 },
                 {
-                    path: "/znld",
-                    component: Znld
-                },
-                {
-                    path:"/qmjk",
-                    component: Qmjk
-                },
-                {
-                    path:"/spjk",
-                    component: Spjk
-                },
-                {
-                    path:"/xwfx",
-                    component: Xwfx
+                    path:"main",
+                    component:Index,
+                    children:[
+                        {
+                            path: "znxs",
+                            component: Znxs
+                        },
+                        {
+                            path: "znld",
+                            component: Znld
+                        },
+                        {
+                            path:"qmjk",
+                            component: Qmjk
+                        },
+                        {
+                            path:"spjk",
+                            component: Spjk
+                        },
+                        {
+                            path:"xwfx",
+                            component: Xwfx
+                        },
+                        {
+                            path:"",
+                            component: Qmjk
+                        }
+                    ]
                 },
                 {
                     path:"",
-                    component: Qmjk
+                    component: Map
                 }
             ]
         },
         {
-            path: "/home",
-            component: Home,
-        },
-        {
             path: "/home2",
             component: Home2,
+            children:[
+                {
+                    path:"index",
+                    components:{
+                        left:Map,
+                        right:Index
+                    },
+                    children:[
+                        {
+                            path: "znxs",
+                            component: Znxs
+                        },
+                        {
+                            path: "znld",
+                            component: Znld
+                        },
+                        {
+                            path:"qmjk",
+                            component: Qmjk
+                        },
+                        {
+                            path:"spjk",
+                            component: Spjk
+                        },
+                        {
+                            path:"xwfx",
+                            component: Xwfx
+                        },
+                        {
+                            path:"",
+                            component: Qmjk
+                        }
+                    ]
+                }
+            ]
         },
         {
             path: "/login",

@@ -5,8 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        isHaveRouter : false,
-        isOpen:false
+        path:"/home2/index"
     }
 })
 
