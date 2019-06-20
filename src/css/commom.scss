@@ -136,3 +136,12 @@ $font-size:16px;
     }
   }
 }
+//修改下拉框
+.reset-sel{
+  .el-input__inner{
+    background: rgb(2, 37, 108);
+    color: #fff;
+    border: none;
+  }
+
+}

@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="con-mid">
-            <div class="con-mid-title">变电站立体巡检智能管控平台</div>
+            <div class="con-mid-title" @click="home">变电站立体巡检智能管控平台</div>
         </div>
         <div style="height: calc(100% - 100px);width: 100%;">
             <router-view></router-view>
@@ -22,7 +22,9 @@ import "../assets/home/js/cssjs.js";
             }
         },
         methods: {
-
+            home(){
+                this.$router.push("/home");
+            }
         },
         mounted(){
             this.$store.state.path = "/home/main";
@@ -63,6 +65,7 @@ import "../assets/home/js/cssjs.js";
         width: 40%;
     }
     .con-mid-title{
+        cursor: pointer;
         margin-top: 17px;
         width: 100%;
         height:61px ;

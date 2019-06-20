@@ -1,8 +1,6 @@
 <template>
     <div id="app">
-
             <router-view/>
-
     </div>
 </template>
 
@@ -11,6 +9,7 @@
         name: 'App',
         data() {
             return {
+                flag:true
             }
         },
         methods: {
@@ -18,23 +17,34 @@
         },
         mounted() {
             window.addEventListener("keydown",function (e) {
-                // this.connection.invoke("SendInfo", "Hello");
-                if(e.keyCode==8&&sessionStorage.isLogin=="yes"){
-                    this.$confirm('确认退出系统吗？', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        sessionStorage.clear();
-                        this.$router.push("/login");
-                    }).catch(() => {
-
-                    });
+                if(this.flag&&sessionStorage.isLogin=="yes"){
+                    if(e.keyCode==8){
+                        this.flag = false;
+                        this.$confirm('确认退出系统吗？', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                        }).then(() => {
+                            this.flag = true;
+                            sessionStorage.clear();
+                            this.$router.push("/login");
+                        }).catch(() => {
+                            this.flag = true;
+                        });
+                    }else if(e.keyCode==36){
+                        this.$router.push("/home");
+                    }
                 }
             }.bind(this));
-            this.connection.on("getMessage", (data)=> {
-                console.log(data);
-            });
+            // this.connection.on("getWeatherMessage", (data)=> {
+            //     console.log(data);
+            // });
+            // this.connection.on("getAlarmMessage", (data)=> {
+            //     console.log(data);
+            // });
+            // this.connection.on("getDevCountMessage", (data)=> {
+            //     console.log(data);
+            // });
         }
     }
 </script>
@@ -111,5 +121,19 @@
     }
     .my-height{
         height: 100%;
+    }
+    .el-select-dropdown{
+        background: rgb(2, 37, 108);
+        border: none;
+        color: #fff;
+    }
+    .el-select-dropdown__item{
+        color: #fff !important;
+    }
+    .el-select-dropdown__item.selected{
+        background: rgb(7, 0, 108);
+    }
+    .el-select-dropdown__item.hover{
+        background: rgb(7, 0, 108);
     }
 </style>

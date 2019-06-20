@@ -11,6 +11,8 @@ import Qmjk from '@/components/qmjk';
 import Spjk from '@/components/spjk';
 import Xwfx from '@/components/xwfx';
 import Map from '@/components/map';
+import Sjtj from '@/components/sjtj';
+import Byq from '@/components/sjtj/byq';
 
 
 //引入base64
@@ -52,6 +54,16 @@ var router = new Router({
                         {
                             path:"xwfx",
                             component: Xwfx
+                        },
+                        {
+                            path:"sjtj",
+                            component: Sjtj,
+                            children:[
+                                {
+                                    path:"byq",
+                                    component:Byq
+                                }
+                            ]
                         },
                         {
                             path:"",
@@ -119,6 +131,12 @@ var router = new Router({
 // 路由守卫
 // 进入路由之前
 router.beforeEach((to, from, next) => {
+    let socket = Vue.prototype.connection;
+    let $chart = Vue.prototype.$chart;
+    $chart.clearCharts();
+    for(let item in socket.methods){
+        socket.off(item);
+    }
     if(sessionStorage.isLogin=="yes"||to.path=="/login"){
         next();
     }else {

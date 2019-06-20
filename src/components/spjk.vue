@@ -110,6 +110,10 @@
                     }]
                 }]
             }
+        },
+        mounted(){
+            //监测告警，提示信息
+            this.$alarmMonitor(this);
         }
     }
 </script>

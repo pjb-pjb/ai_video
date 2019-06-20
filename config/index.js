@@ -14,11 +14,18 @@ module.exports = {
 		'//api':{
 			target:"http://172.16.3.174:8080",
 			changeOrigin:true,
-		}
+		},
+        '/mapi': {
+            target:'http://172.16.3.163:8085',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/mapi': '/api'
+            }
+        }
 	},
 
     // Various Dev Server settings
-    host: '172.16.2.155', // can be overwritten by process.env.HOST
+    host: '0.0.0.0', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,

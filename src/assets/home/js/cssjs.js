@@ -21,11 +21,13 @@ $(function() {
         var weekString = "日一二三四五六";
         var week = "<span style='color:#01d8ff;'>" + weekString[now.getDay()] + "</span>";
         var datatime = year + hour + week;
-        document.getElementById("clock").innerHTML = datatime;
+        if(document.getElementById("clock")){
+            document.getElementById("clock").innerHTML = datatime;
+        }
     }
 
     //年月日时分秒时间
-    setInterval(function() {
+    var time = setInterval(function() {
         clock();
     }, 1000);
 })

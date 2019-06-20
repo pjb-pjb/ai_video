@@ -36,11 +36,15 @@
                     {
                         path: "/xwfx",
                         title: "告警记录"
+                    },
+                    {
+                        path: "/sjtj",
+                        title: "数据统计"
                     }
                 ],
                 activeIndex: 0,
                 title:"全面监控",
-                name:""
+                name:sessionStorage.name
             }
         },
         methods: {
@@ -53,7 +57,7 @@
         mounted() {
             this.activeIndex = this.$route.query.n?this.$route.query.n:0;
             this.title = this.$route.query.title?this.$route.query.title:"全面监控";
-            this.name = this.$route.query.name;
+            // this.name = this.$route.query.name;
         }
     }
 </script>

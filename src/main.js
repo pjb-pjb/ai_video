@@ -18,8 +18,6 @@ import '@/assets/material/css/style.css'
 
 //引入socket
 import connection from "@/utils/socket.js";
-
-
 Vue.prototype.connection = connection;
 
 //引入element-ui,模块化引入组件
@@ -168,8 +166,14 @@ Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 
 // //引入echarts
-// import myCharts from '@/common/myCharts.js'
-// Vue.use(myCharts);
+import myCharts from '@/common/myCharts.js'
+Vue.use(myCharts);
+
+//引入全局告警Alarm Monitor
+import alarmMonitor from "@/utils/alarmMonitor.js";
+Vue.prototype.$alarmMonitor = alarmMonitor;
+
+
 
 //注册全局组件
 import install from '@/utils/components.js';

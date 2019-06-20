@@ -12,7 +12,6 @@ function getMenuList(routerArr, type) {
 function HandleTree(routerArr1, powerN) {
     let childrenArr = [];
     let routerArr = [];
-
     // function fun(arr, item) {
     //     arr = arr.filter(function (val) {
     //         return val.powers.indexOf(powerN) > -1;

@@ -32,8 +32,7 @@
 
 <script>
     import Head from "./common/head.vue";
-    import {$ajax, loginCheck} from "@/http/api/api.js";
-    import base64 from "@/utils/base64.js";
+    import {$ajax, login} from "@/http/api/mapi.js";
 
     export default {
         name: 'Login',
@@ -68,44 +67,37 @@
                 this.$refs["ruleForm"].validate((valid) => {
                     if (!valid) {
                     } else {
-                        var data = this.formLabelAlign;
-                        if (data.name == "admin" && data.pass == "zzes1234") {
-                            sessionStorage.isLogin = "yes";
-                            this.$router.push("/home/map");
-                        } else {
+                        login.data = {
+                            "userNameOrEmailAddress": this.formLabelAlign.name,
+                            "password": this.formLabelAlign.pass,
+                            "rememberClient": true
+                        };
+                        $ajax(login, (res) => {
+                            if (res && res.success) {
+                                sessionStorage.isLogin = "yes";
+                                sessionStorage.userid = res.result.userId;
+                                sessionStorage.accessToken = res.result.accessToken;
+                                // sessionStorage[base64.encode("token")] = base64.encode(res.data.result.accessToken);
+                                // sessionStorage[base64.encode("username")] = base64.encode(this.formLabelAlign.name);
+                                this.$store.state.isHaveRouter = false;
+                                this.$message({
+                                    message: '登录成功',
+                                    type: 'success'
+                                });
+                                this.$router.push("/home");
+                            } else {
+                                this.$message({
+                                    message: '登录失败',
+                                    type: 'error'
+                                });
+                            }
+                        }, () => {
                             this.$message({
                                 message: '登录失败',
                                 type: 'error'
                             });
-                        }
-                        // loginCheck.data = {
-                        //     "userNameOrEmailAddress": this.formLabelAlign.name,
-                        //     "password": this.formLabelAlign.pass,
-                        //     "rememberClient": true
-                        // }
-                        // $ajax(loginCheck,  (res)=>{
-                        //     if (res && res.data.success) {
-                        //         sessionStorage[base64.encode("isLogin")] = base64.encode("yes"),
-                        //         sessionStorage[base64.encode("token")] = base64.encode(res.data.result.accessToken);
-                        //         sessionStorage[base64.encode("username")] = base64.encode(this.formLabelAlign.name);
-                        //         this.$store.state.isHaveRouter = false;
-                        //         this.$message({
-                        //             message: '登录成功',
-                        //             type: 'success'
-                        //         });
-                        //         this.$router.push("/nav");
-                        //     }else {
-                        //         this.$message({
-                        //             message: '登录失败',
-                        //             type: 'error'
-                        //         });
-                        //     }
-                        // }, function () {
-                        //     this.$message({
-                        //         message: '登录失败',
-                        //         type: 'error'
-                        //     });
-                        // });
+                        });
+                        // $.ajax(login);
                     }
                 });
             },
