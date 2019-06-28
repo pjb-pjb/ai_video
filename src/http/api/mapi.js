@@ -35,6 +35,47 @@ let apis = {
 
         },
         isId:true
+    },
+    //获取摄像头预置位信息
+    "GetDeviceTree":{
+        url:"mapi/services/app/FrontPageInfo/GetDeviceTree",
+        method:"get",
+        params:{
+
+        }
+    },
+    //获取已有轮询配置信息
+    "getLxList":{
+        url:"/mapi/services/app/ForfrRoundConfig/GetFrRoundConfigInfo",
+        method:"get",
+        params:{
+
+        }
+    },
+    //云台控制
+    "ptz":{
+        url:"/api/v1/Ptz",
+        method:"get",
+        params:{
+            action:"preset",
+            speed:1
+        }
+    },
+    //截图
+    "Snapshot":{
+        url:"/api/v1/Snapshot",
+        method:"get",
+        params:{
+
+        }
+    },
+    //得到所有预置位列表
+    "GetPagedsDto":{
+        url:"/mapi/services/app/ForFrDevice/GetPagedsDto",
+        method:"get",
+        params:{
+
+        }
     }
 };
 apis.$ajax = $ajax;

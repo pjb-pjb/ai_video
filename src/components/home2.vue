@@ -2,7 +2,7 @@
     <div class="container">
         <div class="container2">
             <div class="main-title1">
-                山西电网变电站智能视频分析平台
+                国网山西检修公司变电站智能监控平台
             </div>
             <div class="main">
                 <div class="left">

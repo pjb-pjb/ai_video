@@ -42,7 +42,10 @@
       37.802839
     ],
     "data": {
-      "id": 1
+      "id": 1,
+      "warnInfo":{
+        "AlarmTime":""
+      }
     },
     "isMy": true
   },

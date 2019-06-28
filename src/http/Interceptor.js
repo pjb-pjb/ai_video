@@ -11,7 +11,6 @@ export default function (axios) {
             expireInSeconds: 86400,
             Authorization:"Bearer "+sessionStorage.accessToken
         };
-
         return config;
     });
     //定义一个响应拦截器

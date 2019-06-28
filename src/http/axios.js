@@ -14,7 +14,11 @@ function $ajax(config, success, error) {
         }
     }
     axios(config).then((res) => {
-        typeof success==="function"&&success(res.data);
+        if(res){
+            typeof success==="function"&&success(res.data);
+        }else {
+            success(res);
+        }
     }).catch((res) => {
         typeof error==="function"&&error(res);
     });

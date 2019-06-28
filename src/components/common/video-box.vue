@@ -1,5 +1,5 @@
 <template>
-    <div style="padding: 5px" class="my-height">
+    <div style="padding: 5px;position: relative;" class="my-height">
         <div class="my-video-box" :style="`background-image:url(/static/img/${url});`">
             <slot></slot>
         </div>

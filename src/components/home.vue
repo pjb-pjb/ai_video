@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="con-mid">
-            <div class="con-mid-title" @click="home">变电站立体巡检智能管控平台</div>
+            <div class="con-mid-title" @click="home">国网山西检修公司变电站智能监控平台</div>
         </div>
         <div style="height: calc(100% - 100px);width: 100%;">
             <router-view></router-view>

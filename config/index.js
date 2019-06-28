@@ -16,11 +16,15 @@ module.exports = {
 			changeOrigin:true,
 		},
         '/mapi': {
-            target:'http://172.16.3.163:8085',
+            target:'http://www.wyy.com:8888',
             changeOrigin: true,
             pathRewrite: {
                 '^/mapi': '/api'
             }
+        },
+        '/api':{
+            target:"http://172.16.3.174:8080",
+            changeOrigin:true,
         }
 	},
 

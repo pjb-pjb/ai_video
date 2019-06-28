@@ -41,7 +41,7 @@
                                     <p class="data" style="color: red;">3263</p>
                                 </li>
                                 <li>
-                                    <p class="wenzi" style="color: #12a8ff;">工作表</p>
+                                    <p class="wenzi" style="color: #12a8ff;">工作票</p>
                                     <p class="data">210</p>
                                 </li>
                                 <li>
@@ -105,7 +105,7 @@
                 this.setCharts();
                 this.warnWatch();
             },
-            setCharts() {
+            setCharts(){
                 var _this = this;
                 //地图
                 $.ajax({
@@ -194,8 +194,10 @@
                                 rigger: 'item',
                                 textStyle: {
                                     color: '#fff',
-                                    extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);',
-                                }
+                                    extraCssText: 'box-shadow: 0 0 3px rgba(255, 0, 0, 0.3);background:rgba(255,0,0,0.3)',
+                                },
+                                triggerOn: "none",
+                                enterable:true
                             },
                             series: [{
                                 name: '山西省',
@@ -293,13 +295,31 @@
                                             shadowColor: '#333'
                                         }
                                     },
-                                    zlevel: 1
+                                    zlevel: 1,
+                                    tooltip: {
+                                        padding:0,
+                                        borderColor:"red",
+                                        borderWidth:"2",
+                                        formatter: function (params) {
+                                            var warnInfo = params.data.data.warnInfo;
+                                            return `
+                                                <a onclick="sessionStorage.setItem('name','${params.data.name}');sessionStorage.setItem('ssdzId','${params.data.data.id}');" href="#${_this.$store.state.path}/znld?n=3">
+                                                    <ul style="white-space: normal;padding: 20px;color:#fff;line-height: 26px;width: 220px;">
+                                                       <li>时间：${warnInfo.AlarmTime.split("T").join(" ")}</li>
+                                                       <li>变电站：${warnInfo.SsdzName}</li>
+                                                       <li>系统：${warnInfo.SSXTName}</li>
+                                                       <li>告警：${warnInfo.AlarmDesc}</li>
+                                                    </ul>
+                                                </a>
+                                            `;
+                                        }
+                                    }
                                 }
                             ]
                         };
                         this.mapChart = _this.$chart.draw("#map", this.mapOption);
                         this.mapChart.on('click', (param) => {
-                            // var name=param.name;
+                            console.log(param);
                             if (param.componentType == 'series') {
                                 var data = param.data.data;
                                 sessionStorage.ssdzId = data && data.id;
@@ -770,15 +790,16 @@
                 })
             },
             //监听告警
-            warnWatch() {
+            warnWatch(){
                 this.connection.on("getAlarmMessage", (data) => {
                     data = JSON.parse(data);
                     var Ssdz = data[0]["Ssdz"];
-                    console.log(this.mapArr);
+                    var index = 0;
                     this.mapArr.forEach((val) => {
                         if (val.data && val.data.id == Ssdz) {
-                            var flag = this.warnArr.some((ele) => {
+                            var flag = this.warnArr.some((ele,n) => {
                                 if (ele.data && ele.data.id == val.data.id) {
+                                    index = n;
                                     ele = val;
                                     ele.data.warnInfo = data[0];
                                     return true;
@@ -787,11 +808,17 @@
                             if (!flag) {
                                 val.data.warnInfo = data[0];
                                 this.warnArr.push(val);
+                                index = this.warnArr.length-1;
                             }
                         }
                     });
                     this.mapOption.series[3].data = this.warnArr;
                     this.mapChart.setOption(this.mapOption);
+                    this.mapChart.dispatchAction({
+                        type: 'showTip',
+                        seriesIndex:3,
+                        dataIndex:index
+                    });
                 });
             }
         }

@@ -49,8 +49,8 @@
         },
         methods: {
             jump(item,index){
-                this.activeIndex = index;
-                this.title = item.title;
+                // this.activeIndex = index;
+                // this.title = item.title;
                 this.$router.push(this.$store.state.path+item.path+"?n="+index+"&name="+this.name+"&title="+this.title);
             }
         },
@@ -58,7 +58,14 @@
             this.activeIndex = this.$route.query.n?this.$route.query.n:0;
             this.title = this.$route.query.title?this.$route.query.title:"全面监控";
             // this.name = this.$route.query.name;
+        },
+        watch:{
+            $route(){
+                this.activeIndex = this.$route.query.n?this.$route.query.n:0;
+                this.title = this.$route.query.title?this.$route.query.title:"全面监控";
+            }
         }
+
     }
 </script>
 

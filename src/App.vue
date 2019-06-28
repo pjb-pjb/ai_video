@@ -18,7 +18,7 @@
         mounted() {
             window.addEventListener("keydown",function (e) {
                 if(this.flag&&sessionStorage.isLogin=="yes"){
-                    if(e.keyCode==8){
+                    if(e.keyCode==8&&e.ctrlKey){
                         this.flag = false;
                         this.$confirm('确认退出系统吗？', '提示', {
                             confirmButtonText: '确定',
@@ -56,6 +56,14 @@
         width: 0;
         height: 0;
         display: none;
+    }
+    .fullscreen {
+        position: fixed !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        left: 0;
+        top: 0;
+        z-index: 9999999 !important;
     }
     * {
         margin: 0;
@@ -135,5 +143,8 @@
     }
     .el-select-dropdown__item.hover{
         background: rgb(7, 0, 108);
+    }
+    .el-dialog__wrapper{
+        z-index: 99999999999999 !important;
     }
 </style>
