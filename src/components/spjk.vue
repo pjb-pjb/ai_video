@@ -13,16 +13,16 @@
                         </card>
                     </el-col>
                     <el-col :span="15" class="my-height">
-                        <div class="my-height">
-                            <div style="height: 50%">
+                        <div class="videoBody" style="height:calc(100% - 40px)">
+                            <div :style="'width:'+videoMenuData[activeMenu].width+';height:'+videoMenuData[activeMenu].height" v-for="n in videoMenuData[activeMenu].num">
                                 <videoBox>
-                                    <mVideo h5id="one1" token="f0af"></mVideo>
+                                    <mVideo :h5id="'one'+n" :token="videoToken[n]"></mVideo>
                                 </videoBox>
                             </div>
-                            <div style="height: 50%">
-                                <videoBox>
-                                    <mVideo h5id="one2"></mVideo>
-                                </videoBox>
+                        </div>
+                        <div class="videoMenu" style="">
+                            <div @click="clickVideoMenu(key)" v-for="item,key in videoMenuData" :class="key == activeMenu ?'active':''">
+                                {{item.innerHTML}}
                             </div>
                         </div>
                     </el-col>
@@ -71,6 +71,46 @@
         name: "spjk",
         data(){
             return {
+                videoMenuData:[
+                    {
+                        innerHTML:"1",
+                        width:"100%",
+                        height:"100%",
+                        num:1
+                    },
+
+                    {
+                        innerHTML:"4",
+                        width:"50%",
+                        height:"50%",
+                        num:4
+                    },
+                    {
+                        innerHTML:"6",
+                        width:"50%",
+                        height:"33.33%",
+                        num:6
+                    },
+                    {
+                        innerHTML:"9",
+                        width:"33.33333%",
+                        height:"33.33333%",
+                        num:9
+                    }
+                ],
+                activeMenu:2,
+                videoToken:[
+                    'one',
+                    'one1',
+                    'one2',
+                    'one3',
+                    'one4',
+                    'one5',
+                    'one6',
+                    'one7',
+                    'one8',
+                    'one9',
+                ],
                 props: {
                     label: 'name',
                     children: 'zones',
@@ -135,6 +175,9 @@
             this.$alarmMonitor(this);
         },
         methods:{
+            clickVideoMenu(key){
+                this.activeMenu = key;
+            },
             loadNode(node, resolve) {
                 console.log(node);
                 if (node.level === 0) {
@@ -183,5 +226,31 @@
     @import "../css/commom";
     .spjk{
         @extend .reset-tree;
+    }
+    .videoBody{
+        >div{
+            float:left;
+        }
+    }
+    .videoMenu {
+        height:40px;
+        text-align: center;
+        >div{
+            width:38px;
+            height:38px;
+            display: inline-block;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 40px;
+            font-size: 22px;
+            color:#fff;
+            border:1px solid #fff;
+            margin:0px 10px;
+            cursor: pointer;
+        }
+        .active{
+            color:#01d8ff;
+            border:1px solid #01d8ff;
+        }
     }
 </style>

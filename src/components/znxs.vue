@@ -68,7 +68,6 @@
                             align="center"
                     >
                     </el-table-column>
-
                     <el-table-column
                             label="查看结果"
                             align="center"
@@ -212,7 +211,7 @@
     </div>
 </template>
 <script>
-    import {$ajax, GetPagedsDto, getLxList, ptz, Snapshot} from "@/http/api/mapi.js";
+    import {$ajax, GetPagedsDto, getLxList, ptz, Snapshot,CreateForFrRoundInfoAndGetId} from "@/http/api/mapi.js";
 
     export default {
         name: 'Index',
@@ -252,7 +251,9 @@
                 sxtList: [],  //摄像头预置位列表
                 loading: "",
                 tags: [],   //
-                filterText:""
+                filterText: "",
+                lxBaoInfo: {},    //轮询报告信息
+                bgId:0
             }
         },
         mounted() {
@@ -261,8 +262,8 @@
             //初始化页面
             this.init();
         },
-        watch:{
-            filterText(val){
+        watch: {
+            filterText(val) {
                 this.$refs.tree.filter(val);
             }
         },
@@ -389,27 +390,76 @@
                             return true;
                         }
                     });
+                    this.lxBaoInfo = {
+                        taskName: data.roundName,
+                        configId: data.id,
+                        ssdz: sessionStorage.ssdzId,
+                        ssdzName: sessionStorage.name,
+                        roundTypeCode: data.roundTypeCode,
+                        roundTypeName: data.roundTypeSubName,
+                        createForFrRoundInfoSubDto: []
+                    };
                     this.startLx(data.baseForfrRoundConfigsSub);
                 }
             },
-            zdyImplement(){
+            zdyImplement() {
+                this.lxBaoInfo = {
+                    taskName: "自定义轮询" + (new Date()),
+                    ssdz: sessionStorage.ssdzId,
+                    ssdzName: sessionStorage.name,
+                    createForFrRoundInfoSubDto: []
+                };
                 this.isShowNowVideo = false;
                 this.startLx(this.tags);
             },
             //开始轮询
-            startLx(data){
+            startLx(data) {
+                //轮询报告保存样式
+                //     "taskName": "string",
+                //     "configId": 0,
+                //     "ssdz": "string",
+                //     "ssdzName": "string",
+                //     "roundTypeCode": "string",
+                //     "roundTypeName": "string",
+                //     "createForFrRoundInfoSubDto": [{
+                //         "devPointId": "string",
+                //         "devPointName": "string",
+                //         "presetId": "string",
+                //         "presetName": "string"
+                //     }]
                 data.forEach((val) => {
+                    if(val.presetId==undefined){
+                        val.presetId = val.id;
+                    }
                     if (val.workType == "station") {
+                        console.log(val.presetId);
+                        this.lxBaoInfo.createForFrRoundInfoSubDto.push({
+                            "presetId": val.presetId,
+                            "presetName": val.presetName || val.name
+                        });
                         this.sxtList.push(val);
                     }
                 });
+                CreateForFrRoundInfoAndGetId.data = this.lxBaoInfo;
+                $ajax(CreateForFrRoundInfoAndGetId,(res)=>{
+                    res = res.result;
+                    this.bgId = res.id;
+                    data.forEach((val)=>{
+                        res.listBaseForFrRoundInfoSubsDto.some((ele)=>{
+                            if(val.presetId==ele.presetId){
+                                val.zid = ele.id;
+                            }
+                        });
+                    });
+                    console.log(this.sxtList);
+                });
+                return;
                 this.loading = this.$loading({
                     lock: true,
                     text: '轮询任务执行中',
                     spinner: 'el-icon-loading',
                     background: 'transparent'
                 });
-                console.log(this.sxtList);
                 this.setPtz(this.sxtList[this.sxtN1]);
             },
             //设置预置位
@@ -427,6 +477,7 @@
                         this.sxtN = 0;
                         this.sxtN1 = 0;
                         this.sxtList = [];
+                        this.lxBaoInfo = {};
                         this.loading.close();
                     }, 2000);
                     return;
@@ -463,7 +514,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
     .znxs {
         height: 99%;
         display: flex;
@@ -485,7 +535,6 @@
             height: 100%;
         }
     }
-
 </style>
 <style lang="scss">
     @import "../css/commom";

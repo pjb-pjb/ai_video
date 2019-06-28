@@ -76,6 +76,14 @@ let apis = {
         params:{
 
         }
+    },
+    //保存轮询报告
+    "CreateForFrRoundInfoAndGetId":{
+        url:"/mapi/services/app/ForfrRoundInfo/CreateForFrRoundInfoAndGetId",
+        method:"post",
+        data:{
+
+        }
     }
 };
 apis.$ajax = $ajax;
