@@ -74,7 +74,7 @@ let apis = {
         data: {}
     },
     //得到轮询配置
-    "getPagedsDto":{
+    "getPagedsDto": {
         url: "/mapi/services/app/ForfrRoundInfo/GetPagedsDto",
         method: "get",
         params: {}

@@ -228,7 +228,6 @@
         UpdateSubDto,
         getPagedsDto    //得到轮询列表
     } from "@/http/api/mapi.js";
-
     export default {
         name: 'Index',
         data() {
@@ -434,6 +433,45 @@
             },
             //开始轮询
             startLx(data) {
+                //轮询报告保存样式
+                //     "taskName": "string",
+                //     "configId": 0,
+                //     "ssdz": "string",
+                //     "ssdzName": "string",
+                //     "roundTypeCode": "string",
+                //     "roundTypeName": "string",
+                //     "createForFrRoundInfoSubDto": [{
+                //         "devPointId": "string",
+                //         "devPointName": "string",
+                //         "presetId": "string",
+                //         "presetName": "string"
+                //     }]
+                data.forEach((val) => {
+                    if(val.presetId==undefined){
+                        val.presetId = val.id;
+                    }
+                    if (val.workType == "station") {
+                        console.log(val.presetId);
+                        this.lxBaoInfo.createForFrRoundInfoSubDto.push({
+                            "presetId": val.presetId,
+                            "presetName": val.presetName || val.name
+                        });
+                        this.sxtList.push(val);
+                    }
+                });
+                CreateForFrRoundInfoAndGetId.data = this.lxBaoInfo;
+                $ajax(CreateForFrRoundInfoAndGetId,(res)=>{
+                    res = res.result;
+                    this.bgId = res.id;
+                    data.forEach((val)=>{
+                        res.listBaseForFrRoundInfoSubsDto.some((ele)=>{
+                            if(val.presetId==ele.presetId){
+                                val.zid = ele.id;
+                            }
+                        });
+                    });
+                    console.log(this.sxtList);
+                });
                 this.loading = this.$loading({
                     lock: true,
                     text: '轮询任务执行中',
