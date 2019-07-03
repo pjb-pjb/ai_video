@@ -57,21 +57,17 @@
                         border
                         style="width: 100%">
                     <el-table-column
-                            prop="sj"
+                            prop="taskName"
                             label="报告名称"
-                            align="center"
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="time"
+                            prop="id"
                             label="生成时间"
-                            align="center"
                     >
                     </el-table-column>
-
                     <el-table-column
                             label="查看结果"
-                            align="center"
                     >
                         <template slot-scope="scope">
                             <el-button
@@ -83,7 +79,6 @@
                     </el-table-column>
                     <el-table-column
                             label="下载报告"
-                            align="center"
                     >
                         <template slot-scope="scope">
                             <el-button
@@ -94,6 +89,17 @@
                         </template>
                     </el-table-column>
                 </el-table>
+                <div style="padding:10px 0;display: flex;justify-content: center;">
+                    <el-pagination
+                            :page-size="5"
+                            :pager-count="11"
+                            layout="prev,pager,next"
+                            :small="true"
+                            :total="total"
+                            @current-change="currentChange"
+                    >
+                    </el-pagination>
+                </div>
             </card>
         </div>
 
@@ -212,7 +218,16 @@
     </div>
 </template>
 <script>
-    import {$ajax, GetPagedsDto, getLxList, ptz, Snapshot} from "@/http/api/mapi.js";
+    import {
+        $ajax,
+        GetPagedsDto,
+        getLxList,
+        ptz,
+        Snapshot,
+        CreateForFrRoundInfoAndGetId,
+        UpdateSubDto,
+        getPagedsDto    //得到轮询列表
+    } from "@/http/api/mapi.js";
 
     export default {
         name: 'Index',
@@ -227,22 +242,7 @@
                 isShowCeLue: false,
                 options: [],
                 tableData: [
-                    {
-                        time: "2018-03-18 10:11:23",
-                        sj: "电子围栏五区北巡视报告",
-                    },
-                    {
-                        time: "2018-03-18 10:11:23",
-                        sj: "电子围栏五区北巡视报告",
-                    },
-                    {
-                        time: "2018-03-18 10:11:23",
-                        sj: "电子围栏五区北巡视报告",
-                    },
-                    {
-                        time: "2018-03-18 10:11:23",
-                        sj: "电子围栏五区北巡视报告",
-                    }
+
                 ],
                 sxtToken: [],    //摄像头token
                 jqrToken: [],    //机器人token
@@ -252,7 +252,10 @@
                 sxtList: [],  //摄像头预置位列表
                 loading: "",
                 tags: [],   //
-                filterText:""
+                filterText: "",
+                lxBaoInfo: {},    //轮询报告信息
+                bgId: 0,
+                total:0         //轮询报告总条数
             }
         },
         mounted() {
@@ -261,8 +264,8 @@
             //初始化页面
             this.init();
         },
-        watch:{
-            filterText(val){
+        watch: {
+            filterText(val) {
                 this.$refs.tree.filter(val);
             }
         },
@@ -294,7 +297,25 @@
                 this.getLxList();
                 //得到预置位树
                 this.GetPagedsDto();
+                //得到轮询列表
+                this.getPagedsDto(1);
             },
+            //得到轮询列表
+            getPagedsDto(n){
+                getPagedsDto.params = {
+                    MaxResultCount:5,
+                    SkipCount:n
+                };
+                $ajax(getPagedsDto,(res)=>{
+                    res = res.result;
+                    this.tableData = res.items;
+                    this.total = res.totalCount;
+                });
+            },
+            currentChange(n){
+                this.getPagedsDto(n);
+            },
+            //得到预置位树
             GetPagedsDto() {
                 $ajax(GetPagedsDto, (data) => {
                     this.data1 = data.result.items;
@@ -389,28 +410,85 @@
                             return true;
                         }
                     });
+                    this.lxBaoInfo = {
+                        taskName: data.roundName,
+                        configId: data.id,
+                        ssdz: sessionStorage.ssdzId,
+                        ssdzName: sessionStorage.name,
+                        roundTypeCode: data.roundTypeCode,
+                        roundTypeName: data.roundTypeSubName,
+                        createForFrRoundInfoSubDto: []
+                    };
                     this.startLx(data.baseForfrRoundConfigsSub);
                 }
             },
-            zdyImplement(){
+            zdyImplement() {
+                this.lxBaoInfo = {
+                    taskName: "自定义轮询" + (new Date()),
+                    ssdz: sessionStorage.ssdzId,
+                    ssdzName: sessionStorage.name,
+                    createForFrRoundInfoSubDto: []
+                };
                 this.isShowNowVideo = false;
                 this.startLx(this.tags);
             },
             //开始轮询
-            startLx(data){
-                data.forEach((val) => {
-                    if (val.workType == "station") {
-                        this.sxtList.push(val);
-                    }
-                });
+            startLx(data) {
                 this.loading = this.$loading({
                     lock: true,
                     text: '轮询任务执行中',
                     spinner: 'el-icon-loading',
                     background: 'transparent'
                 });
-                console.log(this.sxtList);
-                this.setPtz(this.sxtList[this.sxtN1]);
+                //轮询报告保存样式
+                //     "taskName": "string",
+                //     "configId": 0,
+                //     "ssdz": "string",
+                //     "ssdzName": "string",
+                //     "roundTypeCode": "string",
+                //     "roundTypeName": "string",
+                //     "createForFrRoundInfoSubDto": [{
+                //         "devPointId": "string",
+                //         "devPointName": "string",
+                //         "presetId": "string",
+                //         "presetName": "string"
+                //     }]
+                data.forEach((val) => {
+                    if (val.presetId == undefined) {
+                        val.presetId = val.id;
+                    }
+                    if (val.workType == "station") {
+                        console.log(val.presetId);
+                        this.lxBaoInfo.createForFrRoundInfoSubDto.push({
+                            "presetId": val.presetId,
+                            "presetName": val.presetName || val.name
+                        });
+                        this.sxtList.push(val);
+                    }
+                });
+                CreateForFrRoundInfoAndGetId.data = this.lxBaoInfo;
+                $ajax(CreateForFrRoundInfoAndGetId, (res) => {
+                    res = res.result;
+                    this.bgId = res.id;
+                    data.forEach((val) => {
+                        res.listBaseForFrRoundInfoSubsDto.some((ele) => {
+                            if (val.presetId == ele.presetId) {
+                                val.zid = ele.id;
+                            }
+                        });
+                    });
+                    this.setPtz(this.sxtList[this.sxtN1]);
+                });
+            },
+            //结束轮询
+            stopLx() {
+                this.sxtToken = [];
+                this.sxtToken = Object.assign([], this.sxtToken);
+                this.sxtN = 0;
+                this.sxtN1 = 0;
+                this.sxtList = [];
+                this.lxBaoInfo = {};
+                this.loading.close();
             },
             //设置预置位
             setPtz(val) {
@@ -422,14 +500,8 @@
                     //     sxtN1:0, //控制摄像头在第几个
                     //     sxtList:[]  //摄像头预置位列表
                     setTimeout(() => {
-                        this.sxtToken = [];
-                        this.sxtToken = Object.assign([], this.sxtToken);
-                        this.sxtN = 0;
-                        this.sxtN1 = 0;
-                        this.sxtList = [];
-                        this.loading.close();
+                        this.stopLx();
                     }, 2000);
-                    return;
                 }
                 ptz.params.token = val.strToken;
                 ptz.params.preset = val.presetCode;
@@ -452,6 +524,17 @@
             Snapshot(val) {
                 Snapshot.params.token = val.strToken;
                 $ajax(Snapshot, (res) => {
+                    val.path = process.env.IMG_ROOT + res.strUrl;
+                    this.updateBg(val);
+                });
+            },
+            //更新报告信息
+            updateBg(val) {
+                UpdateSubDto.data = {
+                    "id": val.zid,
+                    "colorfulPath": val.path
+                };
+                $ajax(UpdateSubDto, (res) => {
                     console.log(res);
                     this.sxtN1++;
                     this.setPtz(this.sxtList[this.sxtN1]);
@@ -463,7 +546,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
     .znxs {
         height: 99%;
         display: flex;
@@ -485,7 +567,6 @@
             height: 100%;
         }
     }
-
 </style>
 <style lang="scss">
     @import "../css/commom";
@@ -493,6 +574,7 @@
     .znxs {
         .right {
             @extend .reset-table;
+            @extend .reset-page;
         }
     }
 

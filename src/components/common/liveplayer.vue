@@ -321,7 +321,7 @@
                         // this.downloadIamge(process.env.IMG_ROOT+result.data.strUrl,result.data.strFileName);
                         // console.log("http://172.16.3.174:8080" + result.data.strUrl);
                         setTimeout(() => {
-                            this.downloadIamge("http://172.16.3.174:8080" + result.data.strUrl, "a");
+                            this.downloadIamge(process.env.IMG_ROOT + result.data.strUrl, "a");
                         }, 2000);
                     }
                 }).catch(error => {
