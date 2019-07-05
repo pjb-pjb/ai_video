@@ -62,7 +62,7 @@
                     >
                     </el-table-column>
                     <el-table-column
-                            prop="id"
+                            prop="startTime"
                             label="生成时间"
                     >
                     </el-table-column>
@@ -73,7 +73,7 @@
                             <el-button
                                     size="mini"
                                     type="primary"
-                                    @click="isShowBaoGao = true">查看报告
+                                    @click="ckgb(scope.row.id)">查看报告
                             </el-button>
                         </template>
                     </el-table-column>
@@ -81,11 +81,12 @@
                             label="下载报告"
                     >
                         <template slot-scope="scope">
+                            <a :href="$store.state.ROOT+scope.row.wordSavePath" download>
                             <el-button
                                     size="mini"
-                                    type="primary"
-                                    @click="handleDelete(scope.$index, scope.row)">下载
+                                    type="primary">下载
                             </el-button>
+                            </a>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -145,7 +146,7 @@
             <el-row class="my-height" style="width:90%;min-height:300px;margin:0 auto">
                 <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="分类">
-                        <el-input v-model="form.roundTypeParentName+'/'+form.roundTypeSubName"></el-input>
+                        <el-input v-model="form.roundTypeParentName+'/'+form.roundTypeName"></el-input>
                     </el-form-item>
                     <el-form-item label="策略名称">
                         <el-input v-model="form.roundName"></el-input>
@@ -157,7 +158,7 @@
                     <!--<el-input type="textarea" style="height:auto;resize:none;" v-model="form.desc"></el-input>-->
                     <!--</el-form-item>-->
                     <el-table
-                            :data="form.baseForfrRoundConfigsSub"
+                            :data="form.createBaseRoundConfig"
                             border
                             style="width: 100%">
                         <el-table-column
@@ -184,27 +185,91 @@
             </el-row>
         </el-dialog>
 
-        <el-dialog width="50%" title="查看报告" :visible.sync="isShowBaoGao">
-            <el-row class="my-height" style="width:90%;margin:0 auto">
+        <el-dialog top="50px" width="50%" title="报告详情" :visible.sync="isShowBaoGao">
+            <div style="height: 70vh;overflow-y: auto;font-size: 16px;color: #000;">
+                <div>
+                    <div class="title">天气情况</div>
+                    <el-row style="padding: 10px 20px;">
+                        <el-col :span="5">天气：晴</el-col>
+                        <el-col :span="5">风向：西北风</el-col>
+                        <el-col :span="5">风速：8</el-col>
+                    </el-row>
+                </div>
+                <div>
+                    <div class="title">总体情况</div>
+                    <el-table
+                            :data="[bgXqInfo]"
+                            border
+                            style="width: 100%">
+                        <el-table-column
+                                prop="ssdzName"
+                                label="电站名称">
+                        </el-table-column>
+                        <el-table-column
+                                prop="taskName"
+                                label="巡检任务名称">
+                        </el-table-column>
+                        <el-table-column
+                                prop="size"
+                                label="测点数">
+                        </el-table-column>
+                        <el-table-column
+                                prop="startTime"
+                                label="巡检时间">
+                            <template slot-scope="scope">
+                                <span>{{scope.row.startTime.split("T").join(" ")}}</span>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+                <div>
+                    <div class="title">详细信息</div>
+                <el-table
+                        :data="bgXqInfo.listBaseForFrRoundInfoSubsDto"
+                        border
+                        style="width: 100%">
+                    <el-table-column
+                            type="index"
+                            label="序号"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                            prop="name"
+                            label="设备名称">
+                    </el-table-column>
+                    <el-table-column
+                            prop="displayName"
+                            label="监测内容">
+                    </el-table-column>
+                    <el-table-column
+                            label="图片">
+                        <template slot-scope="scope">
+                        <el-image
+                                title="点击查看图片"
+                                @click="seeImg($store.state.ROOT+scope.row.colorfulPath)"
+                                style="width: 100px; height: 100px;cursor: pointer;"
+                                :src="$store.state.ROOT+scope.row.colorfulPath"
+                                fit="contain"></el-image>
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                            prop="result"
+                            label="巡检结果">
+                    </el-table-column>
+                    <el-table-column
+                            prop="review"
+                            label="审核意见">
+                    </el-table-column>
+                    <el-table-column
+                            label="巡检时间">
+                        <template slot-scope="scope">
+                            <span>{{scope.row.resultTime.split("T").join(" ")}}</span>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                </div>
 
-                <h2 style="text-align:center;">一号主变巡检报告</h2>
-                <p style="text-align:center;">时间：2019-6-12 10:10:10 天气：晴 报告员：管理员</p>
-                <br>
-                <center>
-                    <img style="width:300px;display:inline-block" src="/static/img/35kV设备区1号主变压器35kV侧3001间隔汇控柜可见光拍照.jpg"
-                         alt=""><br>
-                    <img style="width:300px;display:inline-block;" src="/static/img/35kV设备区1号主变压器35kV侧30011隔离开关分合指示.jpg"
-                         alt=""><br>
-                    <img style="width:300px;display:inline-block;"
-                         src="/static/img/35kV设备区1号主变压器35kV侧3001间隔汇控柜可见光拍照.jpg" alt=""><br>
-                    <img style="width:300px;display:inline-block;" src="/static/img/35kV设备区1号站用变压器301130接地刀闸分合指示.jpg"
-                         alt=""><br>
-                    <img style="width:300px;display:inline-block;" src="/static/img/35kV设备区1号站用变压器3011断路器A相QS1压力表.jpg"
-                         alt=""><br>
-                    <img style="width:300px;display:inline-block;"
-                         src="/static/img/35kV设备区1号主变压器35kV侧3001间隔汇控柜可见光拍照.jpg" alt=""><br>
-                </center>
-            </el-row>
+            </div>
         </el-dialog>
         <div style="position: absolute;top: 0;right: 0;height: 100%;width: 27%;background: rgba(0,0,0,0.8);bottom:0;margin:  auto 0;display: flex;align-items: center;justify-content: center;"
              v-if="sxtList.length">
@@ -214,6 +279,12 @@
                     <el-step :title="item.presetName||item.name" v-for="item in sxtList"></el-step>
                 </el-steps>
             </div>
+        </div>
+        <div class="img-box" @dblclick="seeImg()" v-show="isImage" style="height: 95vh;width:90vw;position: fixed;left: 0;top:0;z-index: 99999999999;display: flex;align-items: center;justify-content: center;right: 0;bottom: 0;margin: auto;">
+            <el-image
+                    style="height: 100%;width: 100%;"
+                    :src="imgPath"
+                    fit="contain"></el-image>
         </div>
     </div>
 </template>
@@ -226,8 +297,10 @@
         Snapshot,
         CreateForFrRoundInfoAndGetId,
         UpdateSubDto,
-        getPagedsDto    //得到轮询列表
+        getPagedsDto,    //得到轮询列表
+        CreateRoundWordAsync    //创建报告
     } from "@/http/api/mapi.js";
+
     export default {
         name: 'Index',
         data() {
@@ -240,9 +313,7 @@
                 isShowNowVideo: false,
                 isShowCeLue: false,
                 options: [],
-                tableData: [
-
-                ],
+                tableData: [],
                 sxtToken: [],    //摄像头token
                 jqrToken: [],    //机器人token
                 lxList: [],
@@ -253,8 +324,11 @@
                 tags: [],   //
                 filterText: "",
                 lxBaoInfo: {},    //轮询报告信息
-                bgId: 0,
-                total:0         //轮询报告总条数
+                bgId: 0,        //报告主表id
+                total: 0,         //轮询报告总条数
+                bgXqInfo: {},    //报告详情
+                isImage:false,   //是否显示图片
+                imgPath:""
             }
         },
         mounted() {
@@ -269,6 +343,26 @@
             }
         },
         methods: {
+            //查看图片
+            seeImg(imgPath){
+                if(this.isImage){
+                    this.imgPath = "";
+                }else {
+                    this.imgPath = imgPath;
+                }
+                this.isImage = !this.isImage;
+            },
+            //查看报告
+            ckgb(id) {
+                this.isShowBaoGao = true;
+                this.bgXqInfo = {};
+                getPagedsDto.params.where = "Id.Equals(" + id + ")";
+                $ajax(getPagedsDto, (res)=>{
+                    res = res.result.items[0];
+                    res.size = res.listBaseForFrRoundInfoSubsDto.length;
+                    this.bgXqInfo = res;
+                });
+            },
             //树复选框被点击的触发
             check() {
                 this.tags = (this.$refs.tree.getCheckedNodes()).filter((val) => {
@@ -297,22 +391,25 @@
                 //得到预置位树
                 this.GetPagedsDto();
                 //得到轮询列表
-                this.getPagedsDto(1);
+                this.getPagedsDto(0);
             },
             //得到轮询列表
-            getPagedsDto(n){
+            getPagedsDto(n) {
                 getPagedsDto.params = {
-                    MaxResultCount:5,
-                    SkipCount:n
+                    MaxResultCount: 5,
+                    SkipCount: n
                 };
-                $ajax(getPagedsDto,(res)=>{
+                $ajax(getPagedsDto, (res) => {
                     res = res.result;
+                    res.items.forEach((val) => {
+                        val.startTime = val.startTime.split("T").join(" ");
+                    });
                     this.tableData = res.items;
                     this.total = res.totalCount;
                 });
             },
-            currentChange(n){
-                this.getPagedsDto(n);
+            currentChange(n) {
+                this.getPagedsDto(n - 1);
             },
             //得到预置位树
             GetPagedsDto() {
@@ -342,20 +439,20 @@
                             if (val.roundTypeParentName == ele.value) {
                                 if (ele.children) {
                                     var flag = ele.children.some((a) => {
-                                        if (a.value == val.roundTypeSubName) {
+                                        if (a.value == val.roundTypeName) {
                                             return true;
                                         }
                                     });
                                     if (!flag) {
                                         ele.children.push({
-                                            value: val.roundTypeSubName,
-                                            label: val.roundTypeSubName
+                                            value: val.roundTypeName,
+                                            label: val.roundTypeName
                                         });
                                     }
                                 } else {
                                     ele.children = [{
-                                        value: val.roundTypeSubName,
-                                        label: val.roundTypeSubName
+                                        value: val.roundTypeName,
+                                        label: val.roundTypeName
                                     }];
                                 }
                             }
@@ -364,7 +461,7 @@
                     data.forEach((val) => {
                         this.options.forEach((ele) => {
                             ele.children.forEach((a) => {
-                                if (val.roundTypeParentName == ele.value && val.roundTypeSubName == a.value) {
+                                if (val.roundTypeParentName == ele.value && val.roundTypeName == a.value) {
                                     if (a.children) {
                                         var flag = a.children.some((a) => {
                                             if (a.value == val.roundName) {
@@ -389,11 +486,13 @@
                     });
                 });
             },
+            //查看策略详情
             clXq() {
                 if (this.value[2]) {
                     this.lxList.some((val) => {
                         if (val.id == this.value[2]) {
                             this.form = val;
+                            console.log(this.form);
                             this.isShowCeLue = true;
                             return true;
                         }
@@ -415,15 +514,16 @@
                         ssdz: sessionStorage.ssdzId,
                         ssdzName: sessionStorage.name,
                         roundTypeCode: data.roundTypeCode,
-                        roundTypeName: data.roundTypeSubName,
+                        roundTypeName: data.roundTypeName,
                         createForFrRoundInfoSubDto: []
                     };
-                    this.startLx(data.baseForfrRoundConfigsSub);
+                    this.startLx(data.createBaseRoundConfig);
                 }
             },
             zdyImplement() {
+                var date = new Date();
                 this.lxBaoInfo = {
-                    taskName: "自定义轮询" + (new Date()),
+                    taskName: "自定义轮询" + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
                     ssdz: sessionStorage.ssdzId,
                     ssdzName: sessionStorage.name,
                     createForFrRoundInfoSubDto: []
@@ -447,30 +547,31 @@
                 //         "presetName": "string"
                 //     }]
                 data.forEach((val) => {
-                    if(val.presetId==undefined){
+                    if (val.presetId == undefined) {
                         val.presetId = val.id;
                     }
                     if (val.workType == "station") {
-                        console.log(val.presetId);
                         this.lxBaoInfo.createForFrRoundInfoSubDto.push({
                             "presetId": val.presetId,
-                            "presetName": val.presetName || val.name
+                            "name": val.presetName || val.name,
+                            "workType":val.workType
                         });
                         this.sxtList.push(val);
                     }
                 });
                 CreateForFrRoundInfoAndGetId.data = this.lxBaoInfo;
-                $ajax(CreateForFrRoundInfoAndGetId,(res)=>{
+                $ajax(CreateForFrRoundInfoAndGetId, (res) => {
                     res = res.result;
                     this.bgId = res.id;
-                    data.forEach((val)=>{
-                        res.listBaseForFrRoundInfoSubsDto.some((ele)=>{
-                            if(val.presetId==ele.presetId){
+                    data.forEach((val) => {
+                        res.listBaseForFrRoundInfoSubsDto.some((ele) => {
+                            if (val.presetId == ele.presetId) {
                                 val.zid = ele.id;
+                                return true;
                             }
                         });
                     });
-                    console.log(this.sxtList);
+                    this.setPtz(this.sxtList[this.sxtN1]);
                 });
                 this.loading = this.$loading({
                     lock: true,
@@ -491,35 +592,34 @@
                 //         "presetId": "string",
                 //         "presetName": "string"
                 //     }]
-                data.forEach((val) => {
-                    if (val.presetId == undefined) {
-                        val.presetId = val.id;
-                    }
-                    if (val.workType == "station") {
-                        console.log(val.presetId);
-                        this.lxBaoInfo.createForFrRoundInfoSubDto.push({
-                            "presetId": val.presetId,
-                            "presetName": val.presetName || val.name
-                        });
-                        this.sxtList.push(val);
-                    }
-                });
-                CreateForFrRoundInfoAndGetId.data = this.lxBaoInfo;
-                $ajax(CreateForFrRoundInfoAndGetId, (res) => {
-                    res = res.result;
-                    this.bgId = res.id;
-                    data.forEach((val) => {
-                        res.listBaseForFrRoundInfoSubsDto.some((ele) => {
-                            if (val.presetId == ele.presetId) {
-                                val.zid = ele.id;
-                            }
-                        });
-                    });
-                    this.setPtz(this.sxtList[this.sxtN1]);
-                });
+                // data.forEach((val) => {
+                //     if (val.presetId == undefined) {
+                //         val.presetId = val.id;
+                //     }
+                //     if (val.workType == "station") {
+                //         this.lxBaoInfo.createForFrRoundInfoSubDto.push({
+                //             "presetId": val.presetId,
+                //             "presetName": val.presetName || val.name
+                //         });
+                //         this.sxtList.push(val);
+                //     }
+                // });
+                // CreateForFrRoundInfoAndGetId.data = this.lxBaoInfo;
+                // $ajax(CreateForFrRoundInfoAndGetId, (res) => {
+                //     res = res.result;
+                //     this.bgId = res.id;
+                //     data.forEach((val) => {
+                //         res.listBaseForFrRoundInfoSubsDto.some((ele) => {
+                //             if (val.presetId == ele.presetId) {
+                //                 val.zid = ele.id;
+                //             }
+                //         });
+                //     });
+                //     this.setPtz(this.sxtList[this.sxtN1]);
+                // });
             },
             //结束轮询
-            stopLx() {
+            stopLx(isEnd) {
                 this.sxtToken = [];
                 this.sxtToken = Object.assign([], this.sxtToken);
                 this.sxtN = 0;
@@ -527,6 +627,13 @@
                 this.sxtList = [];
                 this.lxBaoInfo = {};
                 this.loading.close();
+                if (isEnd) {
+                    this.getPagedsDto(0);
+                    CreateRoundWordAsync.params.taskId = this.bgId;
+                    $ajax(CreateRoundWordAsync, function (res) {
+                        console.log(res);
+                    });
+                }
             },
             //设置预置位
             setPtz(val) {
@@ -538,7 +645,7 @@
                     //     sxtN1:0, //控制摄像头在第几个
                     //     sxtList:[]  //摄像头预置位列表
                     setTimeout(() => {
-                        this.stopLx();
+                        this.stopLx(true);
                     }, 2000);
                 }
                 ptz.params.token = val.strToken;
@@ -563,7 +670,9 @@
                 Snapshot.params.token = val.strToken;
                 $ajax(Snapshot, (res) => {
                     val.path = process.env.IMG_ROOT + res.strUrl;
-                    this.updateBg(val);
+                    setTimeout(() => {
+                        this.updateBg(val);
+                    }, 3000);
                 });
             },
             //更新报告信息
@@ -571,9 +680,9 @@
                 UpdateSubDto.data = {
                     "id": val.zid,
                     "colorfulPath": val.path
+                    // "colorfulPath": "http://172.16.3.174:8080/mediastore/snapshot/0294/2019-07-04TZ08/11-22-28/0294-3471e286-9078-4819-bee2-7142761a79df.jpg"
                 };
                 $ajax(UpdateSubDto, (res) => {
-                    console.log(res);
                     this.sxtN1++;
                     this.setPtz(this.sxtList[this.sxtN1]);
                 });
@@ -603,6 +712,12 @@
         .right {
             width: 25%;
             height: 100%;
+        }
+        .title{
+            font-weight: bold;
+            line-height: 70px;
+            font-size: 20px;
+            text-align: center;
         }
     }
 </style>

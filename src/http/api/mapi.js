@@ -78,6 +78,14 @@ let apis = {
         url: "/mapi/services/app/ForfrRoundInfo/GetPagedsDto",
         method: "get",
         params: {}
+    },
+    //创建报告
+    "CreateRoundWordAsync":{
+        url:"/mapi/services/app/ForfrRoundInfo/CreateRoundWordAsync",
+        method:"post",
+        params:{
+
+        }
     }
 };
 apis.$ajax = $ajax;
