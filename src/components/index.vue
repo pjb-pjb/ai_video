@@ -64,7 +64,7 @@
                 this.activeIndex = this.$route.query.n?this.$route.query.n:0;
                 this.title = this.$route.query.title?this.$route.query.title:"全面监控";
             }
-        }
+          }
 
     }
 </script>

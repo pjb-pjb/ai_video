@@ -813,7 +813,7 @@
                         }
                     });
                     this.mapOption.series[3].data = this.warnArr;
-                    this.mapChart.setOption(this.mapOption);
+                    this.mapChart.setOption(this.mapOption);1
                     this.mapChart.dispatchAction({
                         type: 'showTip',
                         seriesIndex:3,

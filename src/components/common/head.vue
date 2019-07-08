@@ -15,7 +15,7 @@
         $height: 100px;
         width: 100%;
         .img-box {
-            width: 962px;
+            width: 100%;
             height: 193px;
             background: {
                 image: url("../../assets/login/logo.png");

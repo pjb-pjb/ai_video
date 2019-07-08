@@ -78,6 +78,69 @@ let apis = {
         url: "/mapi/services/app/ForfrRoundInfo/GetPagedsDto",
         method: "get",
         params: {}
+    },
+    // 发送室内机器人任务
+    "sendInDoorRobotTask":{
+        url:"CoreBusinessServer/cbsTaskViewController/startCustomTask.action",
+        method:"post",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+
+    },
+    // 获取室内机器人
+    "getInDoorRobot":{
+        url:"CoreBusinessServer/cbsTaskViewController/queryTaskStatus.action",
+        method: "post",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+    },
+    // 添加室外机器人任务
+    "addOutDoorRobotTask":{
+        url:"E200/xjjh/insertInspectionTask.action",
+        method:"post",
+        data:{
+
+        }
+    },
+    "sendOutDoorRobotTask":{
+        url:"E200/socket/sendTaskPlanRequest.action",
+        method:"post",
+        data:{
+
+        }
+    },
+    // 获取室外机器人
+    "getOutDoorRobot":{
+        url:"E200/socket/queryAllRobotStatus.action",
+        method:"post",
+        data:{
+
+        }
+    },
+    // 通过任务ID获取请求结果
+    "getInDoorRobotsInfo":{
+        url:"/CoreBusinessServer/CBS/record/getInspectionTaskReport.action",
+        method: "post",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+    },
+
+    'saveOutDoorRobotTask':{
+        url:"/api/services/app/ForfrRoundInfo/UpdateDtoByKey",
+        method :"post",
+        data:{
+
+        }
+    },
+    'saveInDoorRobotTask':{
+        url:"/api/services/app/ForfrRoundInfo/UpdateDtoByKey",
+        method :"post",
+        data:{
+
+        }
     }
 };
 apis.$ajax = $ajax;

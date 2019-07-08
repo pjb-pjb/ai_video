@@ -188,7 +188,7 @@ const install = function(Vue) {
                     },
                     clearCharts:function () {
                         charts = [];
-                    }
+                     }
                 }
             }
         }

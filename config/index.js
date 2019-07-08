@@ -11,6 +11,16 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+        // 室外机器人
+        '/E200':{
+            target:"http://192.168.10.100:8088",
+            changeOrigin:true,
+        },
+        // 室内机器人
+        '/CoreBusinessServer':{
+            target:"http://192.168.10.100:8088",
+            changeOrigin:true,
+        },
 		'//api':{
 			target:"http://172.16.3.174:8080",
 			changeOrigin:true,
