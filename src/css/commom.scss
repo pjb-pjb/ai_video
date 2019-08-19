@@ -2,11 +2,57 @@
 .ellipsis{
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: nowrap !important;
 }
 //修改element-ui table 的样式
 $color:#fff;
 $font-size:16px;
+.reset-table2{
+  .el-table {
+    table {
+      tr {
+        div.myActive {
+          background-color: #409eff !important;
+        }
+        td {
+          background-color: transparent !important;
+        }
+        background-color: rgba(0,0,0,0);
+        border: solid 1px #7ecdf4;
+        height:44px;
+        &.hover-row {
+          > td {
+            background: #012cbb !important;
+            color: $color;
+          }
+        }
+        td {
+          color: $color;
+        }
+        th {
+          background-color: #012c7b;
+          border: solid 1px #7ecdf4;
+          color: $color;
+          font-weight: 500;
+        }
+
+
+        border: solid 1px rgba(126, 205, 244, 1);
+        &:hover{
+          background: #2e4b9e !important;
+        }
+        &:nth-child(2n) {
+          background: #012c7b;
+        }
+        &:nth-child(2n+1) {
+          //background-color: #1b4b8b;
+        }
+      }
+
+    }
+    background: transparent !important;
+  }
+}
 .reset-table{
   .el-table {
     table {
@@ -48,15 +94,27 @@ $font-size:16px;
   $lg-font-size:$font-size+8px;
   $active-color:rgba(66, 189, 255, 1);
   $bg:transparent;
+  $ww:60px;
+  $hh:40px;
   .el-pager{
-    li{
+    li.el-icon,li.number{
       background: $bg;
+      display:inline-block;
       color: $color;
       font-size: $font-size;
       transition: all 0.3s;
+      width: $ww;
+      height:   $hh !important;
+      background-color: #0e182e !important;
+      border-radius: 3px;
+      border: solid 1px #6076ad;
+      line-height:  $hh;
+      color:#FFF;
       &.active{
         font-size: $lg-font-size;
-        color: $active-color;
+        color: $active-color ;
+        background: $active-color !important;
+
       }
       &:hover{
         font-size: $lg-font-size;
@@ -65,9 +123,19 @@ $font-size:16px;
     }
   }
   .el-pagination {
+    height:60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .btn-next,.btn-prev{
       background: $bg;
       color: $color;
+      width: $ww;
+      height:   $hh;
+      background-color: #0e182e !important;
+      border-radius: 3px;
+      border: solid 1px #6076ad;
+      line-height:  $hh;
       &:hover{
           transition: all 0.3s;
           color: $active-color;
@@ -79,6 +147,7 @@ $font-size:16px;
     span{
       color: $color;
       font-size: $font-size;
+
     }
   }
 }
@@ -89,10 +158,7 @@ $font-size:16px;
     font-size: $font-size;
   }
 }
-//修改dialog
-.el-dialog{
-  //background: red;
-}
+
 //修改复选框
 .el-checkbox{
   color: #fff;
@@ -104,6 +170,21 @@ $font-size:16px;
     width: $size;
     height: $size;
   }
+}
+.el-checkbox2{
+  color: #e4fdff;
+  $size:16px;
+  .el-checkbox__label{
+    color: #e4fdff;
+    font-size: $size;
+  }
+  .el-checkbox__inner{
+    background-color: rgba(0,0,0,0);
+    width: $size;
+    height: $size;
+
+  }
+
 }
   //修改树
 .reset-tree{

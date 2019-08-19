@@ -1,22 +1,22 @@
 <template>
-    <div class="h5videowrapper h5container" :class="{fullscreen:isFull}" @dblclick="fullScreen()"
+    <div class="h5videowrapper h5container" :class="{fullscreen:isFull}"
          @mouseover="show_menu=true" @mouseout="show_menu=false" style="width:100%;height:100%;">
         <video class="h5video" :id="h5id" autoplay webkit-playsinline playsinline></video>
-        <div class="h5controls" v-show="show_menu" style=" padding:0px">
-            <button type="button" class="btn vidbuttion pull-right" @click="CloseVideo($event)"><i
-                    class="mdi mdi-close"></i></button>
-            <button type="button" class="btn vidbuttion pull-right" @click="show_fangxian=!show_fangxian;"><i
-                    class="mdi mdi-parking"></i></button>
-            <!--<button type="button" @click="alert(0);" class="btn vidbuttion pull-right rtcbutton" > <i class="mdi mdi-format-title"></i></button>-->
-            <!--<button type="button" class="btn vidbuttion pull-right" @click=""> <i class="mdi mdi-car"></i></button>-->
-            <button type="button" class="btn vidbuttion pull-right" @click="DoSnapshot($event)"><i
-                    class="mdi mdi-camera"></i></button>
-            <!-- audio
-            <button type="button" class="btn vidbuttion pull-right" > <i class="mdi  mdi-record"></i></button>
-            <button type="button" class="btn vidbuttion pull-right" href="#"> <i class="mdi mdi-volume-high"></i></button>
-            <button type="button" class="btn vidbuttion pull-right" href="#"> <i class="mdi mdi-volume-off"></i></button>
-            -->
-        </div>
+        <template v-if="this.tokens">
+            <div class="h5controls" v-show="show_menu" style=" padding:0px">
+
+                <button v-show="this.num" type="button" class="btn vidbuttion pull-right" @click="CloseVideo($event)"><i class="mdi mdi-close"></i></button>
+                <button type="button" class="btn vidbuttion pull-right" @click="show_fangxian=!show_fangxian;"><i class="mdi mdi-parking"></i></button>
+                <button type="button" @click="fullScreen()" class="btn vidbuttion pull-right" > <i class="mdi mdi-fullscreen"></i></button>
+                <button type="button" @click="fullScreen()" class="btn vidbuttion pull-right" > <i class="mdi mdi-fullscreen-exit"></i></button>
+                <button type="button" class="btn vidbuttion pull-right" @click="DoSnapshot($event)"><i class="mdi mdi-camera"></i></button>
+                <!-- audio
+                <button type="button" class="btn vidbuttion pull-right" > <i class="mdi  mdi-record"></i></button>
+                <button type="button" class="btn vidbuttion pull-right" href="#"> <i class="mdi mdi-volume-high"></i></button>
+                <button type="button" class="btn vidbuttion pull-right" href="#"> <i class="mdi mdi-volume-off"></i></button>
+                -->
+            </div>
+        </template>
         <div class="ptzcontrols" v-show="show_fangxian" style="padding:0px">
             <div class="row">
                 <button type="button" class="btn ptzbuttonnone pull-right" href="#"><i></i></button>
@@ -65,7 +65,7 @@
 
     export default {
         name: 'liveplayer',
-        props: ['h5id', 'tokens'],
+        props: ['h5id', 'tokens','num'],
         data() {
             return {
                 videoid: this.h5videoid,
@@ -76,7 +76,7 @@
                 show_menu: false,
                 show_fangxian: false,
                 isFull: false,
-                token:""
+                token:"",
             }
         },
         activated() {
@@ -96,6 +96,12 @@
         },
         destroyed() {
             // console.log(this.h5id, "destroyed");
+          if (this.h5handler != undefined) {
+            // $rtcbutton.css("display", "none");
+            this.h5handler.disconnect();
+            delete this.h5handler;
+            this.h5handler = undefined;
+          }
         },
         mounted() {
 
@@ -156,12 +162,16 @@
 
                 var root = process.env.API_ROOT;
                 var wsroot = process.env.WS_HOST_ROOT;
+
+
                 if (root == undefined) {
                     root = window.location.protocol + '//' + window.location.host + window.location.pathname;
                 }
                 if (wsroot == undefined) {
                     wsroot = window.location.host;
                 }
+
+
                 let conf = {
                     videoid: this.h5id,
                     protocol: window.location.protocol, //http: or https:
@@ -169,7 +179,7 @@
                     rootpath: '/', // '/'
                     token: token,
                     hlsver: 'v1', //v1 is for ts, v2 is for fmp4
-                    session: "a8bc161e-bc9d-4e6a-ab3a-c80531ffbfb2" //session got from login
+                    session: "da52ce80-63a9-418d-85a5-d14ebb537ec8" //session got from login
                 };
 
 
@@ -186,7 +196,7 @@
                 this.h5handler.connect();
             },
             CloseVideo(event) {
-                // alert(1);
+                this.$emit('CloseVideoBox',this.num);
                 this.token = "";
                 var $container = $("#" + this.h5id);
                 var $controls = $container.children(".h5controls");
@@ -221,7 +231,7 @@
             },
 
             PtzActionZoomIn(event) {
-                console.log("PtzActionZoomIn");
+                // console.log("PtzActionZoomIn");
                 this.PtzAction('zoomin');
             },
             PtzActionZoomOut(event) {
@@ -245,6 +255,7 @@
             },
 
             PtzAction(action) {
+
                 if (this.h5handler == undefined) {
                     return;
                 }
@@ -254,11 +265,9 @@
                     root = window.location.protocol + '//' + window.location.host + window.location.pathname;
                 }
 
-                var ptzcmd = "token=" + this.currtoken + "&action=" + action + "&speed=0.5";
-                // console.log("ptzcmd", ptzcmd);
+                var ptzcmd = "token=" + this.currtoken + "&action=" + action + "&speed=0.1";
 
                 var url = root + "/api/v1/Ptz?" + ptzcmd + "&session=" + "a8bc161e-bc9d-4e6a-ab3a-c80531ffbfb2";
-
                 this.$http.get(url).then(result => {
                     // console.log(result);
                     if (result.status == 200) {
@@ -358,6 +367,9 @@
         padding: 0px;
         height: 100%;
         width: 100%;
+        /*padding: 18px;*/
+        /*background: url(../../assets/home/images/videoShang.png) no-repeat;*/
+        /*background-size: 100% 100%;*/
     }
 
     video {
@@ -409,7 +421,7 @@
     .h5container {
         position: relative;
         display: inline-block;
-        z-index: 9999;
+        z-index: 99;
     }
 
     .rtcbutton {
@@ -418,12 +430,13 @@
 
     .h5container > .h5controls {
         position: absolute;
-        top: 0;
+        top: 0px;
+        right:0px;
         background: rgba(255, 255, 255, 0.3);
         padding: 0px;
         box-sizing: content-box;
         z-index: 10000;
-        width: 100%;
+        /*width: calc(100% - 28px);*/
 
     }
 

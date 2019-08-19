@@ -98,3 +98,11 @@ import "../assets/home/js/cssjs.js";
     }
 
 </style>
+<style>
+    .aaa{
+        opacity: 0.8;
+    }
+    *{
+        user-select: none;
+    }
+</style>

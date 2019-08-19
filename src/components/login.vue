@@ -64,6 +64,10 @@
         },
         methods: {
             submit() {
+
+
+
+
                 this.$refs["ruleForm"].validate((valid) => {
                     if (!valid) {
                     } else {
@@ -77,6 +81,8 @@
                                 sessionStorage.isLogin = "yes";
                                 sessionStorage.userid = res.result.userId;
                                 sessionStorage.accessToken = res.result.accessToken;
+                                sessionStorage.ssdzId = 47;
+                                sessionStorage.name = "华北.福瑞";
                                 // sessionStorage[base64.encode("token")] = base64.encode(res.data.result.accessToken);
                                 // sessionStorage[base64.encode("username")] = base64.encode(this.formLabelAlign.name);
                                 this.$store.state.isHaveRouter = false;
@@ -84,7 +90,7 @@
                                     message: '登录成功',
                                     type: 'success'
                                 });
-                                this.$router.push("/home");
+                                this.$router.push("/home/main?name=华北.福瑞");
                             } else {
                                 this.$message({
                                     message: '登录失败',
@@ -113,7 +119,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
+<style lang="scss" scoped>
     .login-box {
         width: 100%;
         min-height: 100vh;
@@ -128,6 +134,7 @@
             margin: 100px auto 0;
             padding: 0 50px;
             box-sizing: border-box;
+
             .top {
                 width: 693px;
                 height: 63px;
@@ -212,6 +219,7 @@
                 background-color: #181e72;
                 border: solid 1px #42bdff;
                 border-radius: 0 0 10px 10px;
+                overflow: hidden;
                 .left, .right {
                     &.active {
                         background: #42bdff;
@@ -239,5 +247,11 @@
             bottom: 20px;
             width: 100%;
         }
+
+    }
+</style>
+<style>
+    .el-form-item__label{
+        color:#fff;
     }
 </style>

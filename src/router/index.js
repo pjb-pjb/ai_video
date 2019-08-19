@@ -11,8 +11,16 @@ import Qmjk from '@/components/qmjk';
 import Spjk from '@/components/spjk';
 import Xwfx from '@/components/xwfx';
 import Map from '@/components/map';
+import Ldls from '@/components/ldls';
 import Sjtj from '@/components/sjtj';
-import Byq from '@/components/sjtj/byq';
+import Lxls from '@/components/lxls';
+import Gjbt from '@/components/sjtj/gjbt';
+import Gjtj from '@/components/sjtj/gjtj';
+import Lxjl from '@/components/sjtj/lxjl';
+import Lxjlbt from '@/components/sjtj/lxjlbt';
+import Xjjgll from '@/components/xjjgll';
+import Bjjk from '@/components/bjjk';
+
 
 
 //引入base64
@@ -56,12 +64,40 @@ var router = new Router({
                             component: Xwfx
                         },
                         {
+                            path:"ldls",
+                            component: Ldls
+                        },
+                        {
+                            path:"lxls",
+                            component:Lxls
+                        },
+                        {
+                            path:"xjjgll",
+                            component:Xjjgll
+                        },
+                        {
+                            path:"bjjk",
+                            component:Bjjk
+                        },
+                        {
                             path:"sjtj",
                             component: Sjtj,
                             children:[
                                 {
-                                    path:"byq",
-                                    component:Byq
+                                    path:"gjbt",
+                                    component:Gjbt
+                                },
+                                {
+                                    path:"gjtj",
+                                    component:Gjtj
+                                },
+                                {
+                                    path:"lxjl",
+                                    component:Lxjl
+                                },
+                                {
+                                    path:"lxjlbt",
+                                    component:Lxjlbt
                                 }
                             ]
                         },
@@ -109,6 +145,10 @@ var router = new Router({
                             component: Xwfx
                         },
                         {
+                            path: "sjtj",
+                            component: Sjtj
+                        },
+                        {
                             path:"",
                             component: Qmjk
                         }
@@ -137,6 +177,7 @@ router.beforeEach((to, from, next) => {
     for(let item in socket.methods){
         socket.off(item);
     }
+
     if(sessionStorage.isLogin=="yes"||to.path=="/login"){
         next();
     }else {

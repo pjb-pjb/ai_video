@@ -16,12 +16,13 @@
         width: 100%;
         .img-box {
             width: 100%;
-            height: 193px;
+            height: 168px;
+            margin-top: 30px;
             background: {
                 image: url("../../assets/login/logo.png");
                 size: 100% 100%;
             }
-            margin: 40px 0 0 50px;
+            /*margin: 40px 0 0 50px;*/
         }
 
     }

@@ -1,11 +1,6 @@
 <template>
     <div class="container">
-        <div class="con-mid">
-            <div class="con-mid-title" @click="home">国网山西检修公司变电站智能监控平台</div>
-        </div>
-        <div style="height: calc(100% - 100px);width: 100%;">
-            <router-view></router-view>
-        </div>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -22,18 +17,16 @@ import "../assets/home/js/cssjs.js";
             }
         },
         methods: {
-            home(){
-                this.$router.push("/home");
-            }
+
         },
         mounted(){
             this.$store.state.path = "/home/main";
         },
         watch:{
-            $router(){
-                // this.$store.state.path = "/home/main";
+            // $router(){
+            //     this.$store.state.path = "/home/main";
                 // alert(1);
-            }
+            // }
         }
     }
 
@@ -41,7 +34,6 @@ import "../assets/home/js/cssjs.js";
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
     .clearfix{
         clear: both;
     }
@@ -49,11 +41,14 @@ import "../assets/home/js/cssjs.js";
         width: 100%;
         height: 100vh;
         margin: 0px auto;
-        background: url(../assets/home/images/bj-1.png) no-repeat;
+        /*background: url(../assets/home/images/bj-1.png) no-repeat;*/
+        background: url(../assets/home/images/beijing.png) no-repeat;
         background-size: 100% 100%;
         box-sizing: border-box;
-        padding-left:50px;
-        padding-right: 50px;
+        padding-top:15px;
+        padding-bottom: 15px;
+        padding-left:19px;
+        padding-right: 19px;
         overflow-x: hidden;
         overflow-y: hidden;
         display: flex;
@@ -61,21 +56,12 @@ import "../assets/home/js/cssjs.js";
         align-items: center;
     }
 
-    .con-mid{
-        width: 40%;
+</style>
+<style>
+    *{
+        font-family: MicrosoftYaHei;
     }
-    .con-mid-title{
-        cursor: pointer;
-        margin-top: 17px;
-        width: 100%;
-        height:61px ;
-        line-height: 56px;
-        background: url(../assets/home/images/title.png) no-repeat;
-        background-size: 100% 100%;
-        text-align: center;
-        font-size: 34px;
-        color: #01d8ff;
-        font-weight: bold;
-        padding-left: 10px;
+    .aaa{
+        opacity: 0.8;
     }
 </style>

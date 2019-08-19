@@ -18,30 +18,30 @@ module.exports = {
         },
         // 室内机器人
         '/CoreBusinessServer':{
-            target:"http://192.168.10.100:8088",
+            target:"http://192.168.0.100:8080",
             changeOrigin:true,
         },
-		'//api':{
-			target:"http://172.16.3.174:8080",
-			changeOrigin:true,
-		},
+        '//api':{
+          target:"http://192.168.6.10:9090",
+          changeOrigin:true,
+        },
         '/mapi': {
             // target:'http://www.wyy.com:8888',
-            target:"http://172.16.3.163:8085",
+            target:"http://192.168.6.10:9091",
             changeOrigin: true,
             pathRewrite: {
                 '^/mapi': '/api'
             }
         },
         '/api':{
-            target:"http://172.16.3.174:8080",
+            target:"http://192.168.6.10:9090",
             changeOrigin:true,
         }
 	},
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 9093, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,

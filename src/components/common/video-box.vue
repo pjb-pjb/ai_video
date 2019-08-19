@@ -1,8 +1,10 @@
 <template>
-    <div style="padding: 5px;position: relative;" class="my-height">
+    <div style="padding: 1px;position: relative;" class="my-height">
         <div class="my-video-box" :style="`background-image:url(/static/img/${url});`">
             <slot></slot>
         </div>
+
+            <!--<slot></slot>-->
     </div>
 
 </template>
@@ -22,6 +24,8 @@
         background-color: #888888;
         border: 1px solid #000;
         background-size: 100% 100%;
+
+
     }
 
 </style>
